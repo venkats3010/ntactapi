@@ -1,0 +1,75 @@
+
+.loader {
+    display: none;
+    position: fixed;
+    left: 50%; 
+    top: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 9999;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 50px; /* Width of the spinner */
+    height: 50px; /* Height of the spinner */
+    animation: spin 1s linear infinite; /* Spinner animation */
+}
+
+.double-ring-loader {
+    width: 60px; /* Size of the outer ring */
+    height: 60px; /* Size of the outer ring */
+    border: 6px solid transparent; /* Use transparent for outer ring */
+    border-radius: 50%;
+    animation: spin 1s linear infinite; /* Outer ring spin animation */
+    position: relative;
+}
+
+.double-ring-loader::before {
+    content: '';
+    width: 60px; /* Size of the inner ring */
+    height: 60px; /* Size of the inner ring */
+    border: 6px solid transparent; /* Use transparent for inner ring */
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: spin 1s linear infinite; /* Inner ring spin animation */
+    animation-delay: 0.5s; /* Delay for the second ring */
+    border-top-color: #3498db; /* Color for part of the outer ring */
+    border-right-color: #e74c3c; /* Color for part of the outer ring */
+    border-bottom-color: #f1c40f; /* Color for part of the outer ring */
+    border-left-color: #9b59b6; /* Color for part of the outer ring */
+}
+
+.double-ring-loader::after {
+    content: '';
+    width: 60px; /* Size of the inner ring */
+    height: 60px; /* Size of the inner ring */
+    border: 6px solid transparent; /* Use transparent for inner ring */
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: spin 1s linear infinite; /* Inner ring spin animation */
+    border-top-color: #2ecc71; /* Color for part of the inner ring */
+    border-right-color: #e67e22; /* Color for part of the inner ring */
+    border-bottom-color: #1abc9c; /* Color for part of the inner ring */
+    border-left-color: #34495e; /* Color for part of the inner ring */
+}
+
+/* Spinner animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.highcharts-no-tooltip {
+	display:none;
+}

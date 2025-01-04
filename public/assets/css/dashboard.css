@@ -1,0 +1,797 @@
+    /* .page{max-height: 650px !important;} */
+    
+    .navbar-default {
+        background-color: #3d6eaa !important;
+    }
+    
+    .iconNew {
+        color: #fff !important;
+    }
+    
+    .ui-timepicker-wrapper {
+        z-index: 999999 !important;
+        width: 10% !important;
+    }
+    
+    .error_msg {
+        display: block;
+        width: 100%;
+        margin-top: 0.286rem;
+        font-size: 100%;
+        color: #f44336;
+    }
+    
+    .ui-helper-hidden-accessible {
+        display: none;
+    }
+    
+    #loading {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        display: block;
+        opacity: 0.7;
+        background-color: #e9e7e7;
+        z-index: 99999;
+        text-align: center;
+    }
+    
+    #loading-image {
+        position: absolute;
+        left: 50%;
+        top: 35%;
+        z-index: 1;
+        width: 120px;
+        height: 120px;
+        z-index: 100;
+    }
+    
+    .modal-loader {
+        display: none;
+        position: absolute;
+        top: 40%;
+        left: 45%;
+        text-align: center;
+        margin: 15px auto 35px auto;
+        z-index: 9999;
+        display: block;
+        width: 80px;
+        height: 80px;
+        border: 10px solid rgba(0, 0, 0, .3);
+        border-radius: 50%;
+        border-top-color: #000;
+        animation: spin 1s ease-in-out infinite;
+        -webkit-animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+    
+    @-webkit-keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+    
+    .fc-timegrid-event-harness {
+        height: 30px !important;
+    }
+    
+    .fc-day-today {
+        background: #FFF !important;
+        border: none !important;
+    }
+    
+    .fc-theme-standard td,
+    .fc-theme-standard th {
+        border: 1px solid #eee !important;
+    }
+    
+    .page-main,
+    .page-aside {
+        background: #f1f4f5;
+    }
+    
+    .fc .fc-view-harness {
+        background: #fff;
+    }
+    
+    .ui-helper-hidden-accessible,
+    .ui-tooltip {
+        display: none !important;
+    }
+    
+    button.fc-prev-button,
+    button.fc-next-button {
+        background: none !important;
+        /* border: none !important; */
+    }
+    
+    button.fc-prev-button span,
+    button.fc-next-button span {
+        color: black;
+    }
+    
+    .fc-header-toolbar.fc-toolbar.fc-toolbar-ltr {
+        display: none;
+    }
+    
+    body.site-navbar-small {
+        padding-top: 4.2rem !important;
+    }
+    
+    .fc-toolbar {
+        margin: 1em 0em 1.8em 0em;
+    }
+    
+    .md-chevron-right:before,
+    .md-chevron-left:before {
+        font-size: 22px !important;
+    }
+    
+    .fc-event-time {
+        display: none;
+    }
+    /* #calendar {max-height: 100%;} */
+    
+    .page-aside-section:last-child {
+        margin-bottom: 2px !important;
+        margin-top: 6px;
+    }
+    
+    .hiddenResourceTabs {
+        display: none
+    }
+    
+    .ui-autocomplete {
+        z-index: 99999;
+    }
+    
+    .icon.iconNew {
+        font-size: 2rem;
+    }
+    
+    .fc .fc-col-header-cell-cushion,
+    .fc-timegrid-slot-label-cushion {
+        color: black;
+        font-weight: 500;
+        font-size: 14px;
+        font-weight: 700;
+    }
+    
+    .fc-timegrid-axis-chunk table tr td,
+    .fc-timegrid-slots table tr td {
+        height: 50px !important;
+    }
+    
+    .fc-timegrid-event {
+        height: max-content;
+        cursor: pointer;
+    }
+    /* .fc-left{ margin-left: 20px; margin-top: 5px;} */
+    
+    .btn-close {
+        order: 2;
+    }
+    
+    .widthForAll {
+        width: 100% !important;
+    }
+    
+    .selectedButton {
+        border: black solid 2px !important;
+    }
+    
+    .selectViewNew .avatar img {
+        width: 80%;
+    }
+    
+    .invalid-feedback-text {
+        color: red !important
+    }
+    
+    .btn-prvder {
+        background-color: darkgray !important;
+        color: black !important;
+        font-weight: 500;
+        font-size: 15px;
+    }
+    
+    #cal_title {
+        color: black !important
+    }
+    
+    .modal-header {
+        padding-right: 20px !important;
+    }
+    
+    .selectedViewNewBtn {
+        border: black solid 2px !important;
+        background-color: #192c99 !important;
+    }
+    
+    .datepicker-days td.disabled.day {
+        font-weight: 100 !important
+    }
+    
+    .datepicker-days td.day {
+        font-weight: 600 !important
+    }
+    /* .fc-timegrid-col-frame { background-color: green; }   */
+    /* .fc-timegrid-event-harness { background-color: red; } */
+    /* .fc-timegrid-event-harness { background-color: rgb(255, 255, 255); }  */
+    
+    .fc-v-event .fc-event-title {
+        min-height: 25px !important;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    
+    .switch {
+        margin-bottom: 0rem !important;
+    }
+    
+    .available-slot {
+        display: none;
+    }
+    
+    .available-slot {
+        float: left;
+        height: 15px;
+        width: 30px;
+        border: 1px solid black;
+        background-color: rgb(30, 136, 229);
+        margin: 5px 8px 0px 8px;
+    }
+    
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+    }
+    
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 15px;
+        width: 15px;
+        left: 2px;
+        bottom: 3px;
+        background-color: #8F00FF;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    
+    input:checked+.slider {
+        background-color: rgb(30, 136, 229);
+        /* background-color: #8F00FF; */
+    }
+    
+    input:focus+.slider {
+        box-shadow: 0 0 1px rgb(30, 136, 229);
+    }
+    
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+    
+    .slider.round {
+        border-radius: 22px;
+        border: black solid 2px;
+    }
+    
+    .slider.round:before {
+        border-radius: 50%;
+    }
+    
+    .fc-highlight,
+    .temp-cell:hover,
+    .temp-cell:focus {
+        background: #d3cccc !important
+    }
+    
+    .close {
+        opacity: 1 !important;
+    }
+    
+    .mdl-image {
+        margin-left: 30% !important;
+    }
+    
+    .modal-fill-in {
+        background-color: #fff !important;
+    }
+    
+    .color-calendar.basic {
+        border: none !important;
+    }
+    
+    .page-aside::-webkit-scrollbar,
+    .fc-scroller::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+        width: 0.3em;
+    }
+    
+    .page-aside::-webkit-scrollbar-track,
+    .fc-scroller::-webkit-scrollbar-track,
+    body::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    .page-aside::-webkit-scrollbar-thumb,
+    .fc-scroller::-webkit-scrollbar-thumb,
+    body::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        outline: 1px solid slategrey;
+    }
+    /* .page{max-height: 100vh !important;} */
+    
+    .site-footer {
+        height: auto;
+        padding: unset;
+    }
+    
+    .orders_td {
+        background: rgb(30, 136, 229);
+        color: white;
+    }
+    
+    .schedule_td {
+        background: red;
+        color: white;
+    }
+    
+    .txt-clr {
+        color: #000 !important;
+    }
+    
+    .bgclr-success {
+        background-color: #1E7D38 !important;
+        color: white;
+    }
+    
+    .bgclr-primary {
+        background-color: #3D6EAA !important;
+        color: white;
+    }
+    
+    .bgclr-danger {
+        background-color: #d65729 !important;
+        color: white;
+    }
+    
+    .bgclr-info {
+        background-color: #3183F5 !important;
+        color: white;
+    }
+    
+    .bgclr-brown {
+        background-color: #8c5784 !important;
+        color: white;
+    }
+    
+    .theme-clr-white {
+        color: black;
+        font-weight: 500;
+    }
+    
+    #editAppointment {
+        padding: 0px !important;
+    }
+    
+    .size-invisible {
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    
+    .fc-event-main-frame:hover,
+    .fc-timegrid-event:focus,
+    .fc-timegrid-event:hover {
+        background-color: #3183F5 !important;
+        color: white !important;
+    }
+    
+    .page {
+        border: 6px #f1f4f5 solid;
+    }
+    
+    .site-navbar-small .slidePanel-left,
+    .site-navbar-small .slidePanel-right {
+        width: 400px;
+        top: 4.286rem !important;
+    }
+    
+    .site-sidebar-nav.nav-tabs>.nav-item>.nav-link {
+        line-height: 40px !important;
+    }
+    
+    .site-sidebar.slidePanel.slidePanel-left,
+    .site-sidebar.slidePanel.slidePanel-right {
+        width: 400px !important;
+    }
+    
+    .list-group-item {
+        padding: 0.3rem 0.25rem !important;
+    }
+    
+    .start-icon {
+        font-size: 25px !important;
+    }
+    
+    i.md-start:focus,
+    i.md-start:hover {
+        color: yellow !important
+    }
+    
+    i.icon.md-star {
+        color: yellow;
+    }
+    
+    .panel-heading {
+        padding: 0px;
+        color: white !important;
+    }
+    
+    .panel-group .panel-title:focus,
+    .panel-group .panel-title:hover {
+        color: white !important;
+    }
+    
+    .panel-group .panel-title,
+    .panel-group .panel-title {
+        color: white !important;
+        font-weight: 500;
+    }
+    
+    .panel-group-simple .panel+.panel {
+        padding-top: 10px;
+    }
+    
+    .slidePanel-loading-show {
+        background-color: lightgray;
+        opacity: 0.6;
+    }
+    
+    #non_schdule_patient {
+        display: none;
+    }
+    
+    .slidePanel-loading-show {
+        z-index: 9999999;
+    }
+    
+    .navbar-default .hamburger::before {
+        background: #ebe0e0 !important;
+    }
+    
+    .navbar-default .hamburger .hamburger-bar,
+    .navbar-default .hamburger::after,
+    .navbar-default .hamburger::before {
+        background: #f7eded !important;
+    }
+    
+    #color-calendar {
+        width: 100%;
+    }
+    
+    body {
+        overflow-x: hidden;
+    }
+    
+    #wrapper {
+        padding-left: 0;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+    
+    #wrapper.toggled {
+        padding-right: 250px;
+    }
+    
+    #sidebar-wrapper {
+        z-index: 1000;
+        position: fixed;
+        right: 250px;
+        width: 0;
+        height: 100%;
+        margin-right: -250px;
+        overflow-y: auto;
+        background: #000;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+    
+    #wrapper.toggled #sidebar-wrapper {
+        width: 250px;
+    }
+    
+    #page-content-wrapper {
+        width: 100%;
+        position: absolute;
+        padding: 15px;
+    }
+    
+    #wrapper.toggled #page-content-wrapper {
+        position: absolute;
+        margin-right: 0px;
+    }
+    /* Sidebar Styles */
+    
+    .sidebar-nav {
+        position: absolute;
+        top: 0;
+        width: 250px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+    .sidebar-nav li {
+        text-indent: 20px;
+        line-height: 40px;
+    }
+    
+    .sidebar-nav li a {
+        display: block;
+        text-decoration: none;
+        color: #ffffff;
+        font-weight: 500;
+    }
+    
+    .sidebar-nav li a:hover {
+        text-decoration: none;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .sidebar-nav li a:active,
+    .sidebar-nav li a:focus {
+        text-decoration: none;
+    }
+    
+    .sidebar-nav>.sidebar-brand {
+        height: 65px;
+        font-size: 18px;
+        line-height: 60px;
+    }
+    
+    .sidebar-nav>.sidebar-brand a {
+        color: #999999;
+    }
+    
+    .sidebar-nav>.sidebar-brand a:hover {
+        color: #fff;
+        background: none;
+    }
+    
+    @media(min-width:768px) {
+        #wrapper {
+            padding-left: 0;
+        }
+        #wrapper.toggled {
+            padding-right: 250px;
+        }
+        #sidebar-wrapper {
+            width: 0;
+        }
+        #wrapper.toggled #sidebar-wrapper {
+            width: 250px;
+        }
+        #page-content-wrapper {
+            padding: 20px;
+            position: relative;
+        }
+        #wrapper.toggled #page-content-wrapper {
+            position: relative;
+            margin-right: 0;
+        }
+    }
+    
+    .sidebarnew li:first-child {
+        padding-top: 10px;
+    }
+    
+    .sidebarnew li {
+        border-bottom: 2px white solid;
+        font-size: 17px;
+        font-weight: 600;
+    }
+    /* New calendar css */
+    
+    .vanilla-calendar-day_disabled {
+        color: lightgray !important;
+    }
+    
+    #calendar table {
+        table-layout: fixed;
+    }
+    
+    .temp-cell {
+        display: inline-flex;
+    }
+    /* for Responsive design */
+    
+    .btn-mbl-header {
+        padding: 0rem 0.3rem !important;
+    }
+    
+    @media (min-width: 320px) and (max-width: 480px) {
+        .page-aside.open {
+            overflow-y: visible;
+        }
+        .fc-toolbar {
+            margin: 0rem;
+        }
+        .site-navbar .navbar-container {
+            background-color: #3d6eaa !important;
+        }
+        .navbar-toolbar {
+            margin-top: 11px;
+        }
+        .icon.iconNew {
+            font-size: 1.7rem !important;
+        }
+        .mbl-left-cal {
+            margin-right: 10px;
+            margin-top: 11px;
+        }
+    }
+    
+    @media (min-width: 481px) and (max-width: 768px) {
+        .page-aside.open {
+            overflow-y: visible;
+        }
+        .fc-toolbar {
+            margin: 0rem;
+        }
+        /* .site-navbar .navbar-container {
+            background-color: #3d6eaa !important;
+        } */
+        .btn-today-ntmbl {
+            margin-top: 5px;
+        }
+    }
+    
+    @media (min-width: 768px) {
+        .icon.iconNew {
+            font-size: 1.8rem;
+        }
+    }
+    
+    @media (min-width: 1024px) {
+        .edit-modal-brd {
+            border: gray solid 5px !important;
+        }
+        .not-mbl-li {
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.65rem!important;
+        }
+        .page-aside {
+            overflow-y: scroll;
+        }
+        .btn-today-ntmbl {
+            margin-left: 30%;
+        }
+    }
+    
+    @media (min-width: 768px) {
+        .site-navbar .navbar-header {
+            width: 250px !important;
+        }
+        .badge.up {
+            left: 7px;
+        }
+        .page-aside {
+            overflow-y: scroll;
+        }
+    }
+    
+    .newNav {
+        margin: 0px 7px 10px 15px !important;
+    }
+    
+    .newMobileNav {
+        line-height: 1 !important;
+        color: #fff;
+        border: 1px solid #fff;
+        padding: 3px 8px 4px 8px;
+        height: 30px;
+    }
+    
+    .mbl-a {
+        height: 40px;
+        padding: 5px !important;
+    }
+    
+    .label-txt {
+        font-size: 13px;
+        /* margin-left: 5px; */
+        color: white;
+    }
+    
+    .fc .fc-timegrid-axis-frame {
+        justify-content: space-around !important;
+    }
+    
+    .nav-item>.nav-link>.label-txt {
+        font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+    }
+    
+    li.extra-style .fa {
+        font-size: 20px;
+    }
+    
+    .newicon-size {
+        font-size: 20px !important;
+    }
+    
+    .actions-icons {
+        padding: 2px 7px 2px 7px;
+    }
+    
+    .text-style {
+        font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    
+    .user-footer-extra {
+        text-align: center;
+        margin-top: 20px;
+        padding: 0px 10px 0px 10px;
+    }
+    
+    .newicons:hover {
+        background-color: #376399 !important;
+    }
+    
+    #toggleAvailableSlotsRTO,
+    .timeslots,
+    #toggleAvailableSlotsAD .timeslots {
+        margin: 5px;
+    }
+    
+    .modal-sm-col {
+        min-width: 110px;
+        display: inline-block;
+        margin: 5px 25px 5px 0
+    }
+    
+    .vanilla-calendar-time {
+        display: none;
+    }
+    
+    #schCalenderdiv table {
+        border: 0 !important;
+    }

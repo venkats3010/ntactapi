@@ -1,0 +1,265 @@
+
+<div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                   
+                        
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="form-label">{{ __('Firstname') }}</label>
+                                <div class="col-sm-12 col-md-12">
+                                    <input type="text" placeholder="{{ __('Firstname') }}" name="firstname" id="firstname" class="form-control" autofocus>
+                                    <span class="firstnameErrmsg"></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                            <label class="form-label">{{ __('Lastname') }}</label>
+                                <div class="col-sm-12 col-md-12">
+                                    <input type="text" placeholder="{{ __('Lastname') }}" name="lastname" id="lastname" class="form-control" autofocus>
+                                    <span class="lastnameErrmsg"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                             <div class="form-group col-md-6 mb-3">
+                                    <label for="phone" class="form-label">{{ __('Phone') }}</label>
+                                    <div class="col-sm-12 col-md-12 input-group">
+                                      <select class="form-select" name="countryCode" id="countryCode" style="max-width:80px;padding: 3px;">
+                                        <option value="">Select Country Code</option> 
+                                        <option value="1">+1 </option>
+                                        <option value="91">+91 </option>
+                                        <!--
+                                        <option value="1">(+1) United States & Canada</option>
+                                        <option value="44">(+44) United Kingdom </option>
+                                        <option value="91">(+91) India </option>
+                                        <option value="61">(+61) Australia </option>
+                                        <option value="64">(+64) New Zealand </option>
+                                        <option value="65">(+65) Singapore </option>
+                                        <option value="971">(+971) United Arab Emirates </option>
+                                        <option value="52">(+52) Mexico </option>
+                                        <option value="966">(+966) Saudi Arabia </option>
+                                        <option value="55">(+55) Brazil </option>
+                                        <option value="7">(+7) Russia </option>
+                                        <option value="86">(+86) China </option>
+                                        <option value="34">(+34) Spain </option>
+                                        <option value="39">(+39) Italy </option>-->
+                                        
+                                      </select>
+                                      <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter phone number" onkeypress="return isNumber(event)" onpaste="setTimeout(onlyNumbers.bind(null,this),100)" maxlength="10">
+                                    </div>
+                                  </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="form-label">{{ __('Email') }}</label>
+                                <div class="col-sm-12 col-md-12">
+                                    <input type="text" name="email" id="email"  placeholder="{{ __('Email') }}" class="form-control" required>
+                                    <span class="emailErrmsg"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="form-label">{{ __('Gender') }}</label>
+                                <div class="col-sm-12 col-md-12">
+                                <select class="form-control field_type" name="gender" id="gender" required>
+                                        <option value="M">{{ __('Male') }}</option>
+                                        <option value="F">{{ __('Female') }}</option>
+                                    </select>                                        
+                                    <span class="statusErrmsg"></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label">{{ __('Status') }}</label>
+                                <div class="col-sm-12 col-md-12">
+                                    <select class="form-control field_type" name="status" id="status" required>
+                                        <option value="A">{{ __('Active') }}</option>
+                                        <option value="I">{{ __('Inactive') }}</option>
+                                    </select>                                        
+                                    <span class="statusErrmsg"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="form-label">{{ __('Role') }}</label>
+                                <div class="col-sm-12 col-md-12">
+                                    <select class="form-control" name="role" id="role" required>
+                                        <option value="">Select</option>
+                                        @if (isset($roles) && $roles['status'] == 200)
+                                        @foreach ($roles['data'] as $key => $role)
+                                        <option value="{{ $role['id'] }}">{{ $role['role'] }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    <span id="erole_error_msg" class="text-danger font-weight-bold"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                
+                            </div>
+
+                        </div>
+
+            <div class="row" id="role_base">
+                <div id="role_based">
+                    <h5> Privileges</h5>
+                </div>
+                @if ($modules['status'] == 200)
+                <div class="row" style="margin-left: 15px;margin-bottom: 20px;">
+                    @foreach ($modules['modules'] as $key => $module)  
+                    <div class="col-md-3 module m-2">
+                        <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
+                            <input class="form-check-input uncheckpri per_Checkbox_{{ $module['id'] }}" name="per_checkbox" type="checkbox" value="{{ $module['id'] }}" id="per_checkbox">
+                            <span class="form-check-label fw-bold text-gray-400" for="per_checkbox"></span>
+                            {{ $module['title'] }}
+                        </label>
+                    </div>                   
+                    @endforeach
+
+                </div>
+                @endif
+            </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="form-label"></label>
+                                <div class="col-sm-12 col-md-12 text-end">
+                                    <button class="btn btn-primary btn-block mt-2 btn-submit createUser"><span>{{ __('Save') }}</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script src="{{ my_asset('/assets/js/intlTelInput.js') }}"></script>
+<script>
+/*$(document).ready(function() {
+    var telInput = $("#phone");
+
+    // Delay initialization slightly to avoid focus issues
+    setTimeout(function() {
+        telInput.intlTelInput({
+            initialCountry: 'auto',
+            preferredCountries: ['us', 'ca', 'gb', 'in', 'au', 'nz', 'sg', 'ae', 'mx', 'sa', 'br', 'ru', 'cn', 'es', 'it'],
+            autoPlaceholder: 'aggressive',
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.1.6/js/utils.js",
+            geoIpLookup: function(callback) {
+                fetch('https://ipinfo.io/json', { cache: 'reload' })
+                    .then(response => {
+                        if (response.ok) return response.json();
+                        throw new Error('Failed: ' + response.status);
+                    })
+                    .then(ipjson => callback(ipjson.country))
+                    .catch(e => callback('us'));
+            }
+        });
+
+        // Optionally, focus on the input after initialization
+        setTimeout(function() {
+            telInput.focus();
+        }, 200);
+    }, 100);
+});
+*/
+</script>
+
+
+</script>
+    <script>
+        $('.createUser').on('click', function() {
+            var firstname = $('#firstname').val();
+            var lastname = $('#lastname').val();
+            var phone = $('#phone').val();
+            var email = $('#email').val();
+            var gender = $('#gender').val();
+            var status = $('#status').val();
+            var role = $('#role').val();
+            var orgid = 1;
+            i = 0;
+            var permissions = [];
+            $('#per_checkbox:checked').each(function() {
+                permissions[i++] = $(this).val();
+            });
+			if (firstname == "") {
+				toastr.error("Please Enter First Name ");
+				return false;
+			}
+	   		if (lastname == "") {
+				toastr.error("Please Enter Lastname ");
+				return false;
+			}			
+			if (phone == "" || phone.trim() == "" || phone.length != 10) {
+				toastr.error("Please Enter Valid Phone No. ");
+				$('#phone').focus();
+				return false;
+			}
+    		let countrycode = $('#countryCode').val();
+            if (!countrycode) {
+				toastr.error("Please select country code ");
+				$('#phone').focus();
+				return false;
+            }
+			var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+			if (email === "" || !regex.test(email)) {
+				toastr.error("Please Enter Email  ");
+				$('#email').focus();
+				return false;
+			}	
+            if (role == "") {
+				toastr.error("Please select role ");
+				return false;
+			}		
+			if (status == "") {
+				toastr.error("Please select status ");
+				return false;
+			}
+           		
+            $('.createUser').prop('disabled', true).html('Please Wait...');
+
+            $.ajax({
+                    url: "{{ url('users/store') }}",
+                    type: 'post',
+                    data: {  _token: "{{ csrf_token() }}", firstname:firstname, lastname:lastname, phone:phone, email:email, gender:gender, role:role, status:status, permissions: permissions, orgid:orgid, countrycode:countrycode },
+                    dataType: 'json',
+                    success: function(res) {
+                        console.log(res);
+						if (res.result == "true") {
+							toastr.success(res.message);
+							$("#myoffcanvasRight .btn-close-icon").click();							
+							location.reload();
+						} else {
+							toastr.error(res.message);
+							$('.createUser').prop('disabled', false);
+							$('.createUser').html('Save');
+						}
+						
+                    }
+                });
+        });
+
+function isNumber(evt) {
+	evt = (evt) ? evt : window.event;
+	var charCode = (evt.which) ? evt.which : evt.keyCode;
+	if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+		return false;
+	}
+  return true;
+}
+
+$('#role, #editrole').change(function() {
+    $('.uncheckpri').prop("checked", false);
+    if($(this).val() === "1"){
+        $('.uncheckpri').prop("checked", true);
+    } 
+});
+
+
+</script>

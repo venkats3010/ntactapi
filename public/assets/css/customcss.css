@@ -1,0 +1,99 @@
+
+.custom_class {
+display:flex;justify-content: space-between;border: 2px solid #5cb85c;margin-left: 10px;
+}
+    .btn {
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+    }
+
+    .different-tags {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .different-tags p {
+        width: fit-content;
+        border: 1px solid #5cb85c;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #fff;
+        color: #5cb85c;
+        font-size: 14px;
+        margin: 2px;
+        padding: 4px;
+    }
+
+    legend {
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: -23px;
+        margin-bottom: 0px;
+        width: 25%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px 5px 5px 10px;
+        background-color: #5cb85c;
+        color: #ffffff;
+    }
+
+    fieldset {
+        border: 1px solid #5cb85c !important;
+        margin: 0;
+        xmin-width: 0;
+        padding: 10px;
+        position: relative;
+        border-radius: 4px;
+        background: none;
+        padding-left: 10px !important;
+        margin-bottom: 10px;
+    }
+
+    .dash-widget-vertical .rorate {
+        transform: rotate(-90deg) translate(-50%, 0%);
+        transform-origin: left top;
+        float: left;
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        font-weight: 700;
+        color: #FFF;
+        letter-spacing: 0.1em;
+    }
+
+    .dash-widget-vertical {
+
+        position: absolute;
+        left: 0;
+        height: 100%;
+        width: 30px;
+        top: 0;
+        background: #5cb85c;
+
+    }
+
+    .rmv-mar {
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+
+    .profile-user-img {
+        height: 100px;
+    }
+
+    input.larger {
+        width: 30px;
+        height: 30px;
+    }
+
+    .canvasjs-chart-canvas {
+        width: 100% !important;
+    }
+

@@ -1,0 +1,2240 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Braincare Ntact APIs",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User Login",
+                "description": "Enter the username and password",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/cost_codes/get": {
+            "get": {
+                "tags": [
+                    "CostCodes"
+                ],
+                "summary": "Get a list of all cost codes",
+                "description": "Retrieve all cost codes from the database.",
+                "operationId": "getCostCodes",
+                "responses": {
+                    "200": {
+                        "description": "Cost codes retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "cost_code": {
+                                                        "type": "string",
+                                                        "example": "CC123"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Cost code description"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "active"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cost_codes/store": {
+            "post": {
+                "tags": [
+                    "CostCodes"
+                ],
+                "summary": "Create a new cost code",
+                "description": "Store a new cost code in the database.",
+                "operationId": "storeCostCode",
+                "requestBody": {
+                    "description": "Cost code data to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "cost_code",
+                                    "description",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "cost_code": {
+                                        "type": "string",
+                                        "example": "CC123"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Cost code description"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    },
+                                    "cost_code_uuid": {
+                                        "type": "string",
+                                        "example": "uuid-12345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cost code created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cost code created successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed or unique constraint violated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Cost code number must be unique. This cost code number is already taken."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Integrity constraint violation"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cost_codes/{id}/update": {
+            "post": {
+                "tags": [
+                    "CostCodes"
+                ],
+                "summary": "Update a specific cost code",
+                "description": "Update the cost code details in the database.",
+                "operationId": "updateCostCode",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the cost code to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Cost code data to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "cost_code",
+                                    "description",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "cost_code": {
+                                        "type": "string",
+                                        "example": "CC123"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Cost code description"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    },
+                                    "cost_code_uuid": {
+                                        "type": "string",
+                                        "example": "uuid-12345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cost code updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cost code updated successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cost code not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cost code not found!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/devices/get": {
+            "get": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "Get a list of all devices",
+                "description": "Retrieve all devices from the database.",
+                "operationId": "getDevices",
+                "responses": {
+                    "200": {
+                        "description": "Devices retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "device_name": {
+                                                        "type": "string",
+                                                        "example": "Device 1"
+                                                    },
+                                                    "device_uid": {
+                                                        "type": "string",
+                                                        "example": "UUID123"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "active"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/devices/store": {
+            "post": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "Create a new device",
+                "description": "Store a new device in the database.",
+                "operationId": "storeDevice",
+                "requestBody": {
+                    "description": "Device data to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "device_name",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "device_name": {
+                                        "type": "string",
+                                        "example": "Device 1"
+                                    },
+                                    "device_uid": {
+                                        "type": "string",
+                                        "example": "UUID123"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Device created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Device created successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed or unique constraint violated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Device number must be unique. This device number is already taken."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Integrity constraint violation"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/devices/{id}/update": {
+            "put": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "Update a specific device",
+                "description": "Update the device details in the database.",
+                "operationId": "updateDevice",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the device to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Device data to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "device_name",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "device_name": {
+                                        "type": "string",
+                                        "example": "Device 1"
+                                    },
+                                    "device_uid": {
+                                        "type": "string",
+                                        "example": "UUID123"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Device updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Device updated successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Device not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Device not found!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/employees/get": {
+            "get": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "Get a list of all employees",
+                "description": "Retrieve all employees from the database.",
+                "operationId": "getEmployees",
+                "responses": {
+                    "200": {
+                        "description": "Employees retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "employee_number": {
+                                                        "type": "string",
+                                                        "example": "E12345"
+                                                    },
+                                                    "employee_name": {
+                                                        "type": "string",
+                                                        "example": "John Doe"
+                                                    },
+                                                    "classification": {
+                                                        "type": "string",
+                                                        "example": "Manager"
+                                                    },
+                                                    "per_diem_rate": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 150.5
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "active"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/employees/store": {
+            "post": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "Create a new employee",
+                "description": "Store a new employee in the database.",
+                "operationId": "storeEmployee",
+                "requestBody": {
+                    "description": "Employee data to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "employee_number",
+                                    "employee_name",
+                                    "classification",
+                                    "per_diem_rate",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "employee_number": {
+                                        "type": "string",
+                                        "example": "E12345"
+                                    },
+                                    "employee_name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "classification": {
+                                        "type": "string",
+                                        "example": "Manager"
+                                    },
+                                    "per_diem_rate": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 150.5
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Employee created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Employee created successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed or unique constraint violated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Employee number must be unique. This employee number is already taken."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Integrity constraint violation"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/employees/{id}/update": {
+            "put": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "Update a specific employee",
+                "description": "Update the employee details in the database.",
+                "operationId": "updateEmployee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the employee to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Employee data to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "employee_number",
+                                    "employee_name",
+                                    "classification",
+                                    "per_diem_rate",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "employee_number": {
+                                        "type": "string",
+                                        "example": "E12345"
+                                    },
+                                    "employee_name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "classification": {
+                                        "type": "string",
+                                        "example": "Manager"
+                                    },
+                                    "per_diem_rate": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 150.5
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Employee updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Employee updated successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Employee not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Employee not found!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/jobs/get": {
+            "get": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Get a list of all jobs",
+                "description": "Retrieve all jobs from the database.",
+                "operationId": "getJobs",
+                "responses": {
+                    "200": {
+                        "description": "Jobs retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "job_num": {
+                                                        "type": "string",
+                                                        "example": "J12345"
+                                                    },
+                                                    "job_name": {
+                                                        "type": "string",
+                                                        "example": "Construction Project"
+                                                    },
+                                                    "job_location": {
+                                                        "type": "string",
+                                                        "example": "New York"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "active"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/jobs/store": {
+            "post": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Create a new job",
+                "description": "Store a new job in the database.",
+                "operationId": "storeJob",
+                "requestBody": {
+                    "description": "Job data to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "job_num",
+                                    "job_name",
+                                    "job_location",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "job_num": {
+                                        "type": "string",
+                                        "example": "J12345"
+                                    },
+                                    "job_name": {
+                                        "type": "string",
+                                        "example": "Construction Project"
+                                    },
+                                    "job_location": {
+                                        "type": "string",
+                                        "example": "New York"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Job created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Job created successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed or unique constraint violated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Job number must be unique. This job number is already taken."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Integrity constraint violation"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/jobs/{id}/update": {
+            "post": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Update a specific job",
+                "description": "Update the job details in the database.",
+                "operationId": "updateJob",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the job to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Job data to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "job_num",
+                                    "job_name",
+                                    "job_location",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "job_num": {
+                                        "type": "string",
+                                        "example": "J12345"
+                                    },
+                                    "job_name": {
+                                        "type": "string",
+                                        "example": "Construction Project"
+                                    },
+                                    "job_location": {
+                                        "type": "string",
+                                        "example": "New York"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Job updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Job updated successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Job not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Job not found!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/transactions/get": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get a list of all transactions",
+                "description": "Retrieve all transactions from the database.",
+                "operationId": "getTransactions",
+                "responses": {
+                    "200": {
+                        "description": "Transactions retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "transaction_uuid": {
+                                                        "type": "string",
+                                                        "example": "TXN12345"
+                                                    },
+                                                    "clock_in_uuid": {
+                                                        "type": "string",
+                                                        "example": "CIU12345"
+                                                    },
+                                                    "clock_out_uuid": {
+                                                        "type": "string",
+                                                        "example": "COU12345"
+                                                    },
+                                                    "employee_id": {
+                                                        "type": "integer",
+                                                        "example": 101
+                                                    },
+                                                    "job_id": {
+                                                        "type": "integer",
+                                                        "example": 202
+                                                    },
+                                                    "cost_code_id": {
+                                                        "type": "integer",
+                                                        "example": 303
+                                                    },
+                                                    "transaction_hours": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 8.5
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "active"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/transactions/store": {
+            "post": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Create a new transaction",
+                "description": "Store a new transaction in the database.",
+                "operationId": "storeTransaction",
+                "requestBody": {
+                    "description": "Transaction data to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "transaction_uuid",
+                                    "clock_in_uuid",
+                                    "clock_out_uuid",
+                                    "employee_id",
+                                    "job_id",
+                                    "cost_code_id",
+                                    "transaction_hours",
+                                    "status",
+                                    "created_by"
+                                ],
+                                "properties": {
+                                    "transaction_uuid": {
+                                        "type": "string",
+                                        "example": "TXN12345"
+                                    },
+                                    "clock_in_uuid": {
+                                        "type": "string",
+                                        "example": "CIU12345"
+                                    },
+                                    "clock_out_uuid": {
+                                        "type": "string",
+                                        "example": "COU12345"
+                                    },
+                                    "employee_id": {
+                                        "type": "integer",
+                                        "example": 101
+                                    },
+                                    "job_id": {
+                                        "type": "integer",
+                                        "example": 202
+                                    },
+                                    "cost_code_id": {
+                                        "type": "integer",
+                                        "example": 303
+                                    },
+                                    "transaction_hours": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 8.5
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    },
+                                    "created_by": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Transaction created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Transaction created successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed or unique constraint violated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong, kindly check once."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Integrity constraint violation"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/transactions/{id}/update": {
+            "post": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Update a specific transaction",
+                "description": "Update the transaction details in the database.",
+                "operationId": "updateTransaction",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the transaction to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Transaction data to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "transaction_uuid",
+                                    "clock_in_uuid",
+                                    "clock_out_uuid",
+                                    "employee_id",
+                                    "job_id",
+                                    "cost_code_id",
+                                    "transaction_hours",
+                                    "status",
+                                    "updated_by"
+                                ],
+                                "properties": {
+                                    "transaction_uuid": {
+                                        "type": "string",
+                                        "example": "TXN12345"
+                                    },
+                                    "clock_in_uuid": {
+                                        "type": "string",
+                                        "example": "CIU12345"
+                                    },
+                                    "clock_out_uuid": {
+                                        "type": "string",
+                                        "example": "COU12345"
+                                    },
+                                    "employee_id": {
+                                        "type": "integer",
+                                        "example": 101
+                                    },
+                                    "job_id": {
+                                        "type": "integer",
+                                        "example": 202
+                                    },
+                                    "cost_code_id": {
+                                        "type": "integer",
+                                        "example": 303
+                                    },
+                                    "transaction_hours": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 8.5
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    },
+                                    "updated_by": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Transaction updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Transaction updated successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Transaction not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Transaction not found!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/get": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get a list of all users",
+                "description": "Retrieve all users from the database.",
+                "operationId": "getUsers",
+                "responses": {
+                    "200": {
+                        "description": "Users retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - No or invalid token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 401
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/store": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create a new user",
+                "description": "Store a new user in the database.",
+                "operationId": "storeUser",
+                "requestBody": {
+                    "description": "User data to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "firstname",
+                                    "lastname",
+                                    "username",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "firstname": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "lastname": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "example": "john_doe"
+                                    },
+                                    "gender": {
+                                        "type": "string",
+                                        "example": "male"
+                                    },
+                                    "countrycode": {
+                                        "type": "string",
+                                        "example": "+1"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    },
+                                    "permissions": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "edit"
+                                        }
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    },
+                                    "created_by": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User created successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed or unique constraint violated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Users number must be unique. This user number is already taken."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Integrity constraint violation"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/update/{id}": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update an existing user",
+                "description": "Update the user details for the given user ID.",
+                "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "User data to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "firstname",
+                                    "lastname",
+                                    "username",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "firstname": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "lastname": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "example": "john_doe"
+                                    },
+                                    "gender": {
+                                        "type": "string",
+                                        "example": "male"
+                                    },
+                                    "countrycode": {
+                                        "type": "string",
+                                        "example": "+1"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    },
+                                    "permissions": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "edit"
+                                        }
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "active"
+                                    },
+                                    "updated_by": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User updated successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "firstname": "The firstname field is required."
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "user not found!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "An error occurred while processing your request."
+                                        },
+                                        "details": {
+                                            "type": "string",
+                                            "example": "Database connection failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "Bearer",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "CostCodes",
+            "description": "CostCodes"
+        },
+        {
+            "name": "Devices",
+            "description": "Devices"
+        },
+        {
+            "name": "Employees",
+            "description": "Employees"
+        },
+        {
+            "name": "Jobs",
+            "description": "Jobs"
+        },
+        {
+            "name": "Transactions",
+            "description": "Transactions"
+        },
+        {
+            "name": "Users",
+            "description": "Users"
+        }
+    ]
+}

@@ -1,0 +1,127 @@
+[{
+        "in-room": false,
+        "time": {
+            "consultation_time": "2.00pm",
+            "consultation_room": "T",
+            "consultation_doctor": "Wayne Francis"
+        },
+        "appointment": {
+            "id": "#9445",
+            "name": "Ave Rocio Jimenez",
+            "payment_type": "BCBS-TX: BCB",
+            "patient_details_action": ["follow up", "in office - checked in"]
+        },
+        "payment": {
+            "paid online": [
+                "No Update",
+                "Paid Online",
+                "Pay at Office",
+                "talk to Dr Madhu",
+                "pay later",
+                "Pay at Check-In",
+                "Pay at Check-Out"
+            ],
+            "deductible": ["#ffffff", "#58D68D", "#F9E79F", "#F3082C"]
+        },
+        "status/notes": {
+            "deductible_today": "$35"
+        },
+        "order/tasks": {
+            "VISIT": "Wellness Medicare - Level First",
+            "Labs": "INHOUSE LABS-FEMALE",
+            "Schedule-RTO": "IN ONE MONTH",
+            "Procedures": ["ECHO", "CAROTID DOPPLER", "CAROTID DOPPLER", "ESTIM"],
+            "Notes -ALL": "mammo orders to mch",
+            "Referrals": "Dr. Shyam - Colonoscopy",
+            "Notes -ALL,PROVIDER": "MEDICARE WELLNESS DONE G0439",
+            "action-btn": "Preview"
+        },
+        "Actions": {
+            "action-buttons": ["order", "intake", "chart", "take payment", "notes"]
+        }
+    },
+    {
+        "in-room": true,
+        "time": {
+            "consultation_time": "2.00pm",
+            "consultation_room": "3F",
+            "consultation_doctor": "Jaime"
+        },
+        "appointment": {
+            "id": "#8898",
+            "name": "Curtis Stephens",
+            "payment_type": "BCBS-TX: BCB",
+            "patient_details_action": ["follow up", "in office - checked in"]
+        },
+        "payment": {
+            "paid online": [
+                "No Update",
+                "Paid Online",
+                "Pay at Office",
+                "talk to Dr Madhu",
+                "pay later",
+                "Pay at Check-In",
+                "Pay at Check-Out"
+            ],
+            "deductible": ["#ffffff", "#58D68D", "#F9E79F", "#F3082C"]
+        },
+        "status/notes": {
+            "deductible_today": "$35"
+        },
+        "order/tasks": {
+            "VISIT": "Wellness Medicare - Level First",
+            "Labs": "INHOUSE LABS-FEMALE",
+            "Schedule-RTO": "IN ONE MONTH",
+            "Procedures": ["ECHO", "CAROTID DOPPLER", "CAROTID DOPPLER", "ESTIM"],
+            "Notes -ALL": "mammo orders to mch",
+            "Referrals": "Dr. Shyam - Colonoscopy",
+            "Notes -ALL,PROVIDER": "MEDICARE WELLNESS DONE G0439",
+            "action-btn": "Preview"
+        },
+        "Actions": {
+            "action-buttons": ["order", "intake", "chart", "take payment", "notes"]
+        }
+    },
+    {
+        "in-room": true,
+        "time": {
+            "consultation_time": "2.00pm",
+            "consultation_room": "F",
+            "consultation_doctor": "Wayne Francis"
+        },
+        "appointment": {
+            "id": "#260",
+            "name": "Cynthia Jennings",
+            "payment_type": "BCBS-TX: BCB",
+            "patient_details_action": ["follow up", "in office - checked in"]
+        },
+        "payment": {
+            "paid online": [
+                "No Update",
+                "Paid Online",
+                "Pay at Office",
+                "talk to Dr Madhu",
+                "pay later",
+                "Pay at Check-In",
+                "Pay at Check-Out"
+            ],
+            "deductible": ["#ffffff", "#58D68D", "#F9E79F", "#F3082C"]
+        },
+        "status/notes": {
+            "deductible_today": "$35"
+        },
+        "order/tasks": {
+            "VISIT": "Wellness Medicare - Level First",
+            "Labs": "INHOUSE LABS-FEMALE",
+            "Schedule-RTO": "IN ONE MONTH",
+            "Procedures": ["ECHO", "CAROTID DOPPLER", "CAROTID DOPPLER", "ESTIM"],
+            "Notes -ALL": "mammo orders to mch",
+            "Referrals": "Dr. Shyam - Colonoscopy",
+            "Notes -ALL,PROVIDER": "MEDICARE WELLNESS DONE G0439",
+            "action-btn": "Preview"
+        },
+        "Actions": {
+            "action-buttons": ["order", "intake", "chart", "take payment", "notes"]
+        }
+    }
+]

@@ -1,0 +1,23 @@
+body {
+    /* font-family: "Plus Jakarta Sans", sans-serif; */
+    font-family: 'Open Sans', sans-serif;
+    background-color: #fafafa;
+    background-color: #f0f0f0;
+}
+
+.btn-mainly-blue {
+    background-color: #145388 !important;
+    color: white !important;
+    padding: 10px 20px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    text-align: center !important;
+    display: inline-block !important;
+    transition: background-color 0.3s ease !important;
+  }
+  
+  .btn-mainly-blue:hover {
+    background-color: #103d6e !important; /* Slightly darker shade for hover effect */
+  }

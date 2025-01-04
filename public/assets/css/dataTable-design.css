@@ -1,0 +1,127 @@
+table.dataTable thead th,
+table.dataTable thead td {
+    padding: 10px 18px;
+    border-bottom: 2px solid #e0e0e0 !important;
+}
+
+table.dataTable tbody tr {
+    border-bottom: 1px solid #e0e0e0 !important;
+    background-color: #ffffff;
+}
+
+table.dataTable tbody tr {
+    background-color: #ffffff;
+}
+
+.table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.table tr:nth-child(odd) {
+    background: #fff;
+}
+
+
+/* Pagination */
+
+.dataTables_wrapper .dataTables_paginate .pagination .page-item .page-link {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 2px;
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination .page-item.active .page-link {
+    background-color: black;
+    color: #fff;
+    border: 1px solid black;
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination .page-item.disabled .page-link {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination .page-item.disabled .page-link:hover,
+.dataTables_wrapper .dataTables_paginate .pagination .page-item.disabled .page-link:focus,
+.dataTables_wrapper .dataTables_paginate .pagination .page-item.disabled .page-link:active {
+    background-color: transparent;
+    color: inherit;
+    border-color: transparent;
+}
+
+
+/* Customize the search box */
+
+.dataTables_wrapper .dataTables_filter input[type="search"] {
+    width: 300px !important;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 2px solid #ddd;
+    background-color: #fafafa;
+    color: #333;
+    font-size: 14px;
+}
+
+
+/* Customize the "Show Entries" dropdown */
+
+.dataTables_wrapper .dataTables_length label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 2px solid #ddd;
+    background-color: #fafafa;
+    color: #333;
+    font-size: 14px;
+}
+
+
+/* Customize the sorting icons */
+
+.dataTables_wrapper .sorting:before,
+.dataTables_wrapper .sorting_asc:before,
+.dataTables_wrapper .sorting_desc:before {
+    font-family: "Material Design Icons";
+    font-size: 18px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.dataTables_wrapper .sorting:before {
+    content: "\F0DC";
+}
+
+.dataTables_wrapper .sorting_asc:before {
+    content: "\F160";
+}
+
+.dataTables_wrapper .sorting_desc:before {
+    content: "\F161";
+}
+
+
+/* dataTables_info */
+
+.dataTables_wrapper .dataTables_info {
+    font-weight: 700;
+}
+
+.dataTables_length label {
+    font-weight: 600 !important;
+}
+
+.custom-select {
+    font-weight: 600 !important;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid #e0e0e0 !important;
+}
