@@ -30,6 +30,77 @@
         border-radius: 20px;
     }
 
+/* Default styles for larger screens (laptops, desktops, etc.) */
+.leftsidecard {
+    background-color: #faf0f0;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding: 10px;
+}
+
+.rightsidecard {
+    background-color: #fff;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 20px;
+}
+
+/* Mobile resolution (max-width: 480px) */
+@media (max-width: 480px) {
+    .leftsidecard {
+        background-color: #faf0f0;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px; 
+        
+        padding: 10px;
+    }
+
+    .rightsidecard {
+        background-color: #fff;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 20px; 
+        border-bottom-right-radius: 20px;
+        padding: 20px;
+    }
+}
+
+/* Tablet resolution (max-width: 768px) */
+@media (max-width: 768px) {
+    .leftsidecard {
+        background-color: #faf0f0;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px; 
+        border-bottom-left-radius: 0px;
+        padding: 10px;
+    }
+
+    .rightsidecard {
+        background-color: #fff;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-top-right-radius: 0px;
+        padding: 20px;
+    }
+}
+
+/* Laptop resolution (min-width: 1024px) */
+@media (min-width: 1024px) {
+    .leftsidecard {
+        background-color: #faf0f0;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        padding: 10px;
+    }
+
+    .rightsidecard {
+        background-color: #fff;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        padding: 20px;
+    }
+}
+
     .col-md-6 {
         padding: 20px;
     }
@@ -74,11 +145,12 @@
                 <div class="custom-row">
                 <!-- <div class="col-xl-4 col-12"></div> -->
                 <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-sm-8">
                             <div class="card" style="border-radius: 20px;">
                                 <div class="card-body p-0" style="background-color: #faf0f0; border-radius: 20px;">
                                     <div class="row">
                                         <!-- Left Column: Content like image, date, location -->
-                                        <div class="col-md-5" style="background-color: #faf0f0; border-top-left-radius: 20px; border-bottom-left-radius: 20px; padding: 10px;">
+                                        <div class="col-md-5 leftsidecard" style="">
                                             <div class="text-center m-4">
                                                 <img src="{{ my_asset('/assets/images/ntact-logo.png') }}" alt="login form" class="img-fluid" style="width: 171px; height: 117px;" />
                                             </div>
@@ -97,7 +169,7 @@
                                         </div>
 
                                         <!-- Right Column: Employee Form -->
-                                        <div class="col-md-7" style="background-color: #fff; border-top-right-radius: 20px; border-bottom-right-radius: 20px; padding: 20px;">
+                                        <div class="col-md-7 rightsidecard" style="">
                                             <!-- Error Message -->
                                             <span class="text-danger font-weight-bold my-2">
                                                 {{ session()->get('errorUser') }}
@@ -160,7 +232,7 @@
                                                     </div>
                                                     <div class="d-grid">
                                                     <button class="btn btn-primary mt-3 saveclockin" style="border-radius: 10px;"><i class="mdi mdi-watch-import"></i>  {{ __('Clock In') }}</button>
-                                                    <button class="btn btn-primary mt-3 saveclockout" style="border-radius: 10px;"><i class="mdi mdi-watch-export"></i>  {{ __('Clock In') }}</button>
+                                                    <button class="btn btn-primary mt-3 saveclockout" style="border-radius: 10px;"><i class="mdi mdi-watch-export"></i>  {{ __('Clock Out') }}</button>
                                                     </div>
                                                 
                                                 </div>
@@ -173,7 +245,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        </div>
                     </div>
                 </div>
             </main>

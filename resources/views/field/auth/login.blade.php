@@ -115,7 +115,16 @@
                                             <div class="custom-login-form fieldLoginS2 d-none" style="padding: 20px 0px;" data-id="2">
                                                 <div class="form-group mb-3">
                                                     <label for="otp" class="form-label d-flex lblusername">{{ __('Enter OTP') }}</label>
-                                                    <input type="text" class="form-control" id="otp" name="otp" placeholder="{{ __('Enter OTP') }}" required value="{{ old('otp') }}" autocomplete="off">
+                                                    <!--<input type="text" class="form-control" id="otp" name="otp" placeholder="{{ __('Enter OTP') }}" required value="{{ old('otp') }}" autocomplete="off">-->
+
+                                                    
+                                                <div class="d-flex justify-content-between">
+                                                    <input type="text" class="form-control m-3 otp-input" maxlength="1" id="otp1" autocomplete="off" required>
+                                                    <input type="text" class="form-control m-3 otp-input" maxlength="1" id="otp2" autocomplete="off" required>
+                                                    <input type="text" class="form-control m-3 otp-input" maxlength="1" id="otp3" autocomplete="off" required>
+                                                    <input type="text" class="form-control m-3 otp-input" maxlength="1" id="otp4" autocomplete="off" required>
+                                                </div>
+
                                                     <span id="otpmsg" class="text-danger font-weight-bold"></span>
                                                 </div>
                                                 <div class="d-grid">

@@ -7,11 +7,11 @@
     "require": {
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^3.0",
-        "darkaonline/l5-swagger": "^8.6",
+        "darkaonline/l5-swagger": "*",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "tymon/jwt-auth": "^2.1"
+        "tymon/jwt-auth": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

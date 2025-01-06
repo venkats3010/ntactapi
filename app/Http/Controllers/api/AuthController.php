@@ -14,6 +14,71 @@ use Session;
 
 class AuthController extends Controller
 {
+    public function index(Request $request)
+    {
+        echo "venkat";
+    }
+
+    public function validatePhone(Request $request)
+    { 
+        $validator = Validator::make($request->all(), [ 
+            'phonenumber' => 'required'
+        ]);
+        if ($validator->fails()) { 
+             return response()->json(['status' => 422, 'error'=>$validator->errors()], 422);            
+        }
+
+        try {
+             $getPhone = DB::table('users')->where('phone', $request->get('phonenumber'))->first();
+             if ($getPhone) {
+                return response(['status' => 200, 'result' => "true", 'message' => "Phone authentication successful"]);          
+               } else {
+                 return response(['status' => 201,'error' => 'Enter correct Phone Number'], 201); 
+               }
+             } catch (\Exception $e) {
+                  // Handle any other exceptions
+                 echo "An error occurred: " . $e->getMessage();
+             }
+
+    }
+
+    public function validatePin(Request $request)
+    { 
+        $validator = Validator::make($request->all(), [ 
+            'phonenumber' => 'required',
+            'mpin' => 'required'
+        ]);
+        if ($validator->fails()) { 
+             return response()->json(['status' => 422, 'error'=>$validator->errors()], 422);            
+        }
+        //echo $request->get('mpin');exit;
+        try {
+             $getUser = DB::table('users')->where('phone', $request->get('phonenumber'))->first();
+             //print_r($getUser->mpin); exit;
+            //$pinverify = password_verify($request->get('mpin'), $getUser->mpin);
+            if ($getUser && Hash::check($request->get('mpin'), $getUser->mpin)) {
+                $userModel = \App\Models\User::find($getUser->id);
+                if ($userModel) {
+                    $accessToken = $userModel->createToken('authToken')->plainTextToken;               
+                    Log::channel('auth')->info('testAPI-- ' . json_encode($getUser));
+                    if ($getUser) {
+                        return response(['status' => 200, 'result' => "true", 'message' => "user authentication successful", 'auth' => 1, 'access_token' => $accessToken, 'data'=>$getUser]);
+                    }else{
+                        return json_encode($getUser);          
+                    }
+                } else {
+                    return response(['status' => 201, 'error' => 'User not found'], 201);
+                }           
+              } else {
+                return response(['status' => 201,'error' => 'Enter correct Phone Number/Pin'], 201); 
+              }
+             } catch (\Exception $e) {
+                  // Handle any other exceptions
+                 echo "An error occurred: " . $e->getMessage();
+             }
+
+    }
+
     /**
      * @OA\POST(
      *     path="/api/auth/login",
@@ -54,10 +119,7 @@ class AuthController extends Controller
      *     }
      * )
      */
-    public function index(Request $request)
-    {
-        echo "venkat";
-    }
+
     public function login(Request $request)
     { 
         //echo $username = $request->input('username');

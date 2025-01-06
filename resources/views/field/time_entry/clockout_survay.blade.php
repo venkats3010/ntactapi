@@ -65,6 +65,42 @@
     border-radius: 50%;
 }
 </style>
+<style>
+   .custom-radio .form-check {
+      display: flex;
+      align-items: center;
+    }
+
+    .custom-radio .form-check-label {
+      flex: 1; /* Allow label to take up remaining space */
+      padding: 10px 15px;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+      
+    }
+
+    .custom-radio .form-check-input {
+      margin-left: 0;
+      margin-top: 0;
+    }
+
+    .custom-radio .form-check-input:checked + .form-check-label {
+      background-color: #f8d7da;
+      border: 1px solid #f5c2c7;
+      color: #842029;
+    }
+
+    .custom-radio .form-check-label:hover {
+      background-color: #fce4e6;
+      border-color: #f5c2c7;
+    }
+    .form-check-input:checked {
+      background-color: #842029 !important;
+      border-color: 1px solid #842029 !important;
+    }
+  </style>
 <link rel="stylesheet" href="{{ my_asset('/assets/css/custom-auth.css') }}" />
 <div class="custom-login">
         <!--<div class="bg-login bg-primary"></div>-->
@@ -74,6 +110,7 @@
                 <div class="custom-row">
                 <!-- <div class="col-xl-4 col-12"></div> -->
                 <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-sm-8">
                             <div class="card" style="border-radius: 20px;">
                                 <div class="card-body p-0" style="background-color: #faf0f0; border-radius: 20px;">
                                     <div class="row">
@@ -117,16 +154,20 @@
                                                 <div class="form-group mb-3">
                                                 
                                                 <label for="" class="question-lable">Were there any safety incidents today?</label>
-                                                <div class="col-md-12" style="margin:10px;">
-                                                    <div class="form-check p-2" style="">
-                                                        <input class="form-check-input" type="radio" name="qanswer_1_1" id="form11" value="YES"  style="">
-                                                        <label class="form-check-label" for="form61">YES</label>
-                                                    </div>
-                                                    <div class="form-check p-2" style="">
-                                                        <input class="form-check-input" type="radio" name="qanswer_1_1" id="form12" value="NO"  style="">
-                                                        <label class="form-check-label" for="">NO</label>
+                                                
+
+                                                <div class="custom-radio">
+                                                    <div class="form-check p-0 mt-2">
+                                                        <input class="form-check-input m-2" type="radio" name="qanswer_1_1" id="form11" value="YES">
+                                                        <label class="form-check-label" for="form11"><span class="mx-3">Yes</span></label>
+                                                    </div>    
+                                                    <div class="form-check p-0 mt-2">
+                                                        <input class="form-check-input m-2" type="radio" name="qanswer_1_1" id="form12" value="NO">
+                                                        <label class="form-check-label" for="form12"><span class="mx-3">No</span></label>
                                                     </div>
                                                 </div>
+
+                                   
                                                     
                                                 </div>
                                                 <div class="d-grid">
@@ -139,14 +180,14 @@
                                                 <div class="form-group mb-3">
                                                     
                                                     <label for="" class="question-lable">Was today’s work on schedule according to the project timeline?</label>
-                                                    <div class="col-md-12" style="margin:10px;">
-                                                        <div class="form-check p-2" style="">
-                                                            <input class="form-check-input" type="radio" name="qanswer_1_2" id="form21" value="YES"  style="">
-                                                            <label class="form-check-label" for="form61">YES</label>
-                                                        </div>
-                                                        <div class="form-check p-2" style="">
-                                                            <input class="form-check-input" type="radio" name="qanswer_1_2" id="form22" value="NO"  style="">
-                                                            <label class="form-check-label" for="">NO</label>
+                                                    <div class="custom-radio">
+                                                        <div class="form-check p-0 mt-2">
+                                                            <input class="form-check-input m-2" type="radio" name="qanswer_1_2" id="form21" value="YES">
+                                                            <label class="form-check-label" for="form21"><span class="mx-3">Yes</span></label>
+                                                        </div>    
+                                                        <div class="form-check p-0 mt-2">
+                                                            <input class="form-check-input m-2" type="radio" name="qanswer_1_2" id="form22" value="NO">
+                                                            <label class="form-check-label" for="form22"><span class="mx-3">No</span></label>
                                                         </div>
                                                     </div>
                                                         
@@ -163,17 +204,18 @@
                                                 <div class="form-group mb-3">
                                                     
                                                     <label for="" class="question-lable">Is all safety equipment and signage properly stored or left in place for tomorrow?</label>
-                                                    <div class="col-md-12" style="margin:10px;">
-                                                        <div class="form-check p-2" style="">
-                                                            <input class="form-check-input" type="radio" name="qanswer_1_3" id="form31" value="YES"  style="">
-                                                            <label class="form-check-label" for="form61">YES</label>
-                                                        </div>
-                                                        <div class="form-check p-2" style="">
-                                                            <input class="form-check-input" type="radio" name="qanswer_1_3" id="form32" value="NO"  style="">
-                                                            <label class="form-check-label" for="">NO</label>
+                                                    <div class="custom-radio">
+                                                        <div class="form-check p-0 mt-2">
+                                                            <input class="form-check-input m-2" type="radio" name="qanswer_1_3" id="form31" value="YES">
+                                                            <label class="form-check-label" for="form31"><span class="mx-3">Yes</span></label>
+                                                        </div>    
+                                                        <div class="form-check p-0 mt-2">
+                                                            <input class="form-check-input m-2" type="radio" name="qanswer_1_3" id="form32" value="NO">
+                                                            <label class="form-check-label" for="form32"><span class="mx-3">No</span></label>
                                                         </div>
                                                     </div>
-                                                        
+
+                                                                                                            
                                                     </div>
                                                     <div class="d-grid">
                                                         <button class="btn btn-secondary mt-3 previous-btn" data-id="3" style="border-radius: 50px;"><span class="mdi mdi-arrow-left-bold"></span> {{ __('Previous') }}</button>
@@ -186,14 +228,14 @@
                                                 <div class="form-group mb-3">
                                                     
                                                     <label for="" class="question-lable">What tasks are prioritized for tomorrow, and is everyone clear on their responsibilities?</label>
-                                                    <div class="col-md-12" style="margin:10px;">
-                                                        <div class="form-check p-2" style="">
-                                                            <input class="form-check-input" type="radio" name="qanswer_1_4" id="form41" value="YES"  style="">
-                                                            <label class="form-check-label" for="form11">YES</label>
-                                                        </div>
-                                                        <div class="form-check p-2" style="">
-                                                            <input class="form-check-input" type="radio" name="qanswer_1_4" id="form42" value="NO"  style="">
-                                                            <label class="form-check-label" for="">NO</label>
+                                                    <div class="custom-radio">
+                                                        <div class="form-check p-0 mt-2">
+                                                            <input class="form-check-input m-2" type="radio" name="qanswer_1_4" id="form41" value="YES">
+                                                            <label class="form-check-label" for="form41"><span class="mx-3">Yes</span></label>
+                                                        </div>    
+                                                        <div class="form-check p-0 mt-2">
+                                                            <input class="form-check-input m-2" type="radio" name="qanswer_1_4" id="form42" value="NO">
+                                                            <label class="form-check-label" for="form42"><span class="mx-3">No</span></label>
                                                         </div>
                                                     </div>
                                                         
@@ -210,7 +252,7 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
                     </div>
                 </div>
             </main>

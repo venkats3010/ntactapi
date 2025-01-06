@@ -54,9 +54,15 @@ class EmployeesController extends Controller
  * )
  */
 
-    public function get()
+    public function get(Request $request)
     {
-        $response = DB::table('employees')->get();
+        if ($request->has('id')) {
+            $response = Employees::where('employee_number', $request->get('id'))->get();
+        }else if($request->has('name')){
+            $response = Employees::where('employee_name', 'like', '%' . $request->get('name') . '%')->get();
+        }else{
+            $response = DB::table('employees')->get();
+        }        
         return response()->json([
             'status' => 200,
             'message' => 'Success',

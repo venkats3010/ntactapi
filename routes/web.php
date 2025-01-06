@@ -39,27 +39,6 @@ Route::get('/mpinlogin/{uid}', '\App\Http\Controllers\LoginController@mpinIndex'
 		  Route::post('/get-user-modules', '\App\Http\Controllers\DashboardController@getUserModules');   
     });
 
-    Route::group(['prefix' => 'modules'], function () {
-      Route::get('/', '\App\Http\Controllers\ModulesController@index')->name('modules');
-      Route::get('/create', '\App\Http\Controllers\ModulesController@create')->name('modules.create');
-      Route::post('/store', '\App\Http\Controllers\ModulesController@store')->name('modules.store');
-      Route::get('edit/{id}', '\App\Http\Controllers\ModulesController@editTicket')->name('modules.edit');
-      Route::post('/update/{id}', '\App\Http\Controllers\ModulesController@create')->name('modules.update');
-      Route::delete('destroy/{id}', '\App\Http\Controllers\ModulesController@destroy')->name('modules.destroy');
-    });
-
-    Route::group(['prefix' => 'tasks'], function () {
-      Route::get('/', '\App\Http\Controllers\TasksController@index')->name('tasks');
-      Route::get('/create', '\App\Http\Controllers\TasksController@create')->name('tasks.create');
-      Route::post('/store', '\App\Http\Controllers\TasksController@store')->name('tasks.store');
-      Route::post('edit/', '\App\Http\Controllers\TasksController@edit')->name('tasks.edit');
-      Route::post('/update', '\App\Http\Controllers\TasksController@update')->name('tasks.update');
-      Route::delete('destroy/{id}', '\App\Http\Controllers\TasksController@destroy')->name('tasks.destroy');
-      Route::post('/getuser', '\App\Http\Controllers\TasksController@getuser');
-      Route::get('/archive', '\App\Http\Controllers\TasksController@archive')->name('tasks.archive');
-      Route::post('/statusupdate', '\App\Http\Controllers\TasksController@statusupdate')->name('tasks.statusupdate');
-    });
-
     Route::group(['prefix' => 'users'], function () {
       Route::get('/', '\App\Http\Controllers\UsersController@index')->name('users');
       Route::get('/get', '\App\Http\Controllers\UsersController@get')->name('users.get');
@@ -79,18 +58,7 @@ Route::get('/mpinlogin/{uid}', '\App\Http\Controllers\LoginController@mpinIndex'
     });
 
         
-
-
-    Route::group(['prefix' => 'document'], function () {
-        Route::get('/', '\App\Http\Controllers\DocumentController@index');
-        Route::post('/get', '\App\Http\Controllers\DocumentController@get')->name('document.get');
-        Route::post('/create', '\App\Http\Controllers\DocumentController@create')->name('document.create');
-        Route::post('/store', '\App\Http\Controllers\DocumentController@store')->name('document.store');
-        Route::post('/update', '\App\Http\Controllers\DocumentController@update')->name('document.update');
-        Route::post('/delete', '\App\Http\Controllers\DocumentController@delete')->name('document.delete');
-        Route::delete('destroy/{id}', '\App\Http\Controllers\DocumentController@destroy')->name('document.destroy');
-    });
-    
+   
     Route::group(['prefix' => 'employees'], function () {
       Route::get('/', '\App\Http\Controllers\EmployeesController@index')->name('employees');
       Route::get('/get', '\App\Http\Controllers\EmployeesController@get')->name('employees.get');
@@ -109,7 +77,7 @@ Route::get('/mpinlogin/{uid}', '\App\Http\Controllers\LoginController@mpinIndex'
     });
 
     Route::group(['prefix' => 'time-sheet'], function () {
-      Route::get('/', '\App\Http\Controllers\EmployeesController@index')->name('payroll');
+      Route::get('/', '\App\Http\Controllers\EmployeesController@index')->name('timeSheet');
     });
     
     Route::group(['prefix' => 'payroll'], function () {

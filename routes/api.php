@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\EmployeesController;
 use App\Http\Controllers\api\CostcodesController;
+use App\Http\Controllers\api\FieldTimeEntryController;
 use App\Http\Controllers\api\UsersController;
 
 Route::get('/user', function (Request $request) {
@@ -21,6 +22,8 @@ Route::get('/abc', '\App\Http\Controllers\api\AuthController@index');
 });*/
 //Route::post('/abc', [AuthController::class, 'index']);
 Route::group(['prefix' => 'auth'],function(){
+    Route::post('/validatePhone', [AuthController::class, 'validatePhone']);
+    Route::post('/validatePin', [AuthController::class, 'validatePin']);
     Route::post('/login', [AuthController::class, 'login']);
 });
 
@@ -46,6 +49,12 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
         Route::get('/get', [UsersController::class, 'get']);
         Route::post('/store', [UsersController::class, 'store']);
         Route::post('/update/{id}', [UsersController::class, 'update']);
+    });
+
+    Route::group(['prefix' => 'field_time'], function () {
+        Route::post('/clockin', [FieldTimeEntryController::class, 'clockin']);
+        Route::post('/clockout', [FieldTimeEntryController::class, 'clockout']);
+
     });
 
 });
