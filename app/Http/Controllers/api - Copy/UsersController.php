@@ -58,8 +58,6 @@ class UsersController extends Controller
 			$res = User::where('id', $request->get('id'))->first();
 		}else if($request->has('name')){
 			$res = User::where('username', 'like', '%' . $request->get('name') . '%')->get();
-        }else if($request->has('phone')){
-			$res = User::where('phone', $request->get('phone'))->get();
         }else{
             $res = DB::table('users')->where('status', 'A')->get();
         }

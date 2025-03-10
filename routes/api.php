@@ -89,7 +89,11 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
         Route::get('/destroy/{id}', [UsersController::class, 'destroy']);
         Route::post('/changepassword/{id}', [UsersController::class, 'changepassword']);
     });
+    Route::group(['prefix' => 'logs'], function () {
+        Route::get('/get', [DashboardController::class, 'getLogs']);
+        Route::get('/create', [DashboardController::class, 'createLogs']);
 
+    });
     Route::group(['prefix' => 'field_time'], function () {
         Route::get('/get', [FieldTimeEntryController::class, 'get']);
         Route::post('/clockin', [FieldTimeEntryController::class, 'clockin']);
@@ -101,8 +105,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     });
     Route::group(['prefix' => 'timesheet'], function () {
-        Route::get('/get', [TimeSheetController::class, 'get']);
+        Route::get('/get', [TimeSheetController::class, 'get']);		
 		//---------------Field-------------------
+		Route::get('/getlast', [TimeSheetController::class, 'getlast']);
         Route::post('/clockin', [TimeSheetController::class, 'clockin']);
         Route::post('/clockout', [TimeSheetController::class, 'clockout']);
         Route::post('/update_survay', [TimeSheetController::class, 'update_survay']);
@@ -121,6 +126,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 		Route::post('/updateMultipleRecap', [TimeSheetController::class, 'updateMultipleRecap']);
 		Route::post('/updateInjuryClockout/{id}', [TimeSheetController::class, 'updateInjuryClockout']);
 		Route::get('/adminDashboard', [TimeSheetController::class, 'adminDashboard']);
+		Route::get('/timesheetCounts', [TimeSheetController::class, 'timesheetCounts']);
+		Route::get('/getRecapData', [TimeSheetController::class, 'getRecapData']);
+		Route::get('/getSageData', [TimeSheetController::class, 'getSageData']);
     });
 	Route::get('/getEmp', [EmployeesController::class, 'getEmpList']);
 });

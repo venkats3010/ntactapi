@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use App\Models\SurvayQuestionnaire;
-use App\Models\LogMaster;
 use App\Models\Company;
 use App\Models\Roles;
 use DB;
@@ -74,46 +73,6 @@ class DashboardController extends Controller
         }
         //$response = DB::table('roles')->get();
         return response(['status' => 200, 'result' => "true", 'message' => "Success", 'data'=>$res]);
-    }
-
-	public function getLogs(Request $request)
-    {
-        $response = DB::table('log_master')->get();
-        return response(['status' => 200, 'result' => "true", 'message' => "Success", 'data'=>$response]);
-    }	
-	public function createLogs(Request $request)
-    {
-        try {
-			$res = DB::table('log_master')->insert([
-				'type' => $request->input('type'),
-				'lbl' => $request->input('lbl'),
-				'query' => json_encode($request->input('query')),
-				'api_req' => json_encode($request->input('api_req')),
-				'api_resp' => json_encode($request->input('api_resp')),
-				'raw_data' => json_encode($request->input('raw_data')),
-				'created_by' => $request->input('created_by'),
-			]);
-
-			//$insertedId = $res->id;
-            return response()->json([
-                'status' => 200,
-                'message' => 'Log created successfully.',
-            ], 200);
-        } catch (QueryException $e) {
-            if ($e->getCode() === '23000') {
-                return response()->json([
-                    'status' => 400,
-                    'error' => 'Something went wrong.',
-                    'details' => $e->getMessage(),
-                ], 400);
-            }
-
-            return response()->json([
-                'status' => 500,
-                'error' => 'An error occurred while processing your request.',
-                'details' => $e->getMessage(),
-            ], 500);
-        }
     }
 	
 }
