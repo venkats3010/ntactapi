@@ -32,8 +32,8 @@ class TransactionsController extends Controller
  *             @OA\Property(property="message", type="string", example="Success"),
  *             @OA\Property(property="data", type="array", @OA\Items(
  *                 @OA\Property(property="transaction_uuid", type="string", example="TXN12345"),
- *                 @OA\Property(property="clock_in_uuid", type="string", example="CIU12345"),
- *                 @OA\Property(property="clock_out_uuid", type="string", example="COU12345"),
+ *                 @OA\Property(property="clock_in", type="string", example="CIU12345"),
+ *                 @OA\Property(property="clock_out", type="string", example="COU12345"),
  *                 @OA\Property(property="employee_id", type="integer", example=101),
  *                 @OA\Property(property="job_id", type="integer", example=202),
  *                 @OA\Property(property="cost_code_id", type="integer", example=303),
@@ -53,7 +53,19 @@ class TransactionsController extends Controller
  *     )
  * )
  */    
-    public function get()
+ 
+     public function get(Request $request)
+    {	//	\DB::enableQueryLog(); 
+		if($request->has('id')){
+			$res = Transactions::where('transaction_id', $request->get('id'))->first();
+		}else{
+            $res = DB::table('transactions')->get();
+        }
+		// $qry = \DB::getQueryLog();
+		return response(['status' => 200, 'result' => "true", 'message' => "Success", 'data'=>$res]);
+    }
+ 
+    /* public function get()
     {
         $response = DB::table('transactions')->get();
         return response()->json([
@@ -61,7 +73,7 @@ class TransactionsController extends Controller
             'message' => 'Success',
             'data' => $response,
         ], 200);
-    }
+    } */
 
 /**
  * @OA\Post(
@@ -74,10 +86,10 @@ class TransactionsController extends Controller
  *         required=true,
  *         description="Transaction data to be created",
  *         @OA\JsonContent(
- *             required={"transaction_uuid", "clock_in_uuid", "clock_out_uuid", "employee_id", "job_id", "cost_code_id", "transaction_hours", "status", "created_by"},
+ *             required={"transaction_uuid", "clock_in", "clock_out", "employee_id", "job_id", "cost_code_id", "transaction_hours", "status", "created_by"},
  *             @OA\Property(property="transaction_uuid", type="string", example="TXN12345"),
- *             @OA\Property(property="clock_in_uuid", type="string", example="CIU12345"),
- *             @OA\Property(property="clock_out_uuid", type="string", example="COU12345"),
+ *             @OA\Property(property="clock_in", type="string", example="CIU12345"),
+ *             @OA\Property(property="clock_out", type="string", example="COU12345"),
  *             @OA\Property(property="employee_id", type="integer", example=101),
  *             @OA\Property(property="job_id", type="integer", example=202),
  *             @OA\Property(property="cost_code_id", type="integer", example=303),
@@ -120,8 +132,8 @@ class TransactionsController extends Controller
         try {
             $validated = $request->validate([
                 'transaction_uuid' => 'required',
-                'clock_in_uuid' => 'required',
-                'clock_out_uuid' => 'required',
+                'clock_in' => 'required',
+                'clock_out' => 'required',
                 'employee_id' => 'required',
                 'job_id' => 'required',
                 'cost_code_id' => 'required',
@@ -132,8 +144,8 @@ class TransactionsController extends Controller
 
             $transaction = Transactions::create([
                 'transaction_uuid' => $validated['transaction_uuid'],
-                'clock_in_uuid' => $validated['clock_in_uuid'],
-                'clock_out_uuid' => $validated['clock_out_uuid'],
+                'clock_in' => $validated['clock_in'],
+                'clock_out' => $validated['clock_out'],
                 'employee_id' => $validated['employee_id'],
                 'job_id' => $validated['job_id'],
                 'transaction_hours' => $validated['transaction_hours'],                
@@ -181,10 +193,10 @@ class TransactionsController extends Controller
  *         required=true,
  *         description="Transaction data to be updated",
  *         @OA\JsonContent(
- *             required={"transaction_uuid", "clock_in_uuid", "clock_out_uuid", "employee_id", "job_id", "cost_code_id", "transaction_hours", "status", "updated_by"},
+ *             required={"transaction_uuid", "clock_in", "clock_out", "employee_id", "job_id", "cost_code_id", "transaction_hours", "status", "updated_by"},
  *             @OA\Property(property="transaction_uuid", type="string", example="TXN12345"),
- *             @OA\Property(property="clock_in_uuid", type="string", example="CIU12345"),
- *             @OA\Property(property="clock_out_uuid", type="string", example="COU12345"),
+ *             @OA\Property(property="clock_in", type="string", example="CIU12345"),
+ *             @OA\Property(property="clock_out", type="string", example="COU12345"),
  *             @OA\Property(property="employee_id", type="integer", example=101),
  *             @OA\Property(property="job_id", type="integer", example=202),
  *             @OA\Property(property="cost_code_id", type="integer", example=303),
@@ -232,8 +244,8 @@ class TransactionsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'transaction_uuid' => 'required',
-            'clock_in_uuid' => 'required',
-            'clock_out_uuid' => 'required',
+            'clock_in' => 'required',
+            'clock_out' => 'required',
             'employee_id' => 'required',
             'job_id' => 'required',
             'cost_code_id' => 'required',
@@ -250,8 +262,8 @@ class TransactionsController extends Controller
 
         if ($transaction) {
             $transaction->transaction_uuid = $request->transaction_uuid;
-            $transaction->clock_in_uuid = $request->clock_in_uuid;
-            $transaction->clock_out_uuid = $request->clock_out_uuid;
+            $transaction->clock_in = $request->clock_in;
+            $transaction->clock_out = $request->clock_out;
             $transaction->employee_id = $request->employee_id;
             $transaction->job_id = $request->job_id;
             $transaction->cost_code_id = $request->cost_code_id;

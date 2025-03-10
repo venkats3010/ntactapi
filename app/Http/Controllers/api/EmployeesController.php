@@ -20,54 +20,52 @@ class EmployeesController extends Controller
         return view('employees.index');
     }
 
-    /**
- * @OA\Get(
- *     path="/api/employees/get",
- *     operationId="getEmployees",
- *     tags={"Employees"},
- *     summary="Get a list of all employees",
- *     description="Retrieve all employees from the database.",
- *     @OA\Response(
- *         response=200,
- *         description="Employees retrieved successfully",
- *         @OA\JsonContent(
- *             @OA\Property(property="status", type="integer", example=200),
- *             @OA\Property(property="message", type="string", example="Success"),
- *             @OA\Property(property="data", type="array", @OA\Items(
- *                 @OA\Property(property="employee_number", type="string", example="E12345"),
- *                 @OA\Property(property="employee_name", type="string", example="John Doe"),
- *                 @OA\Property(property="classification", type="string", example="Manager"),
- *                 @OA\Property(property="per_diem_rate", type="number", format="float", example=150.5),
- *                 @OA\Property(property="status", type="string", example="active")
- *             ))
- *         )
- *     ),
- *     @OA\Response(
- *         response=500,
- *         description="Internal Server Error",
- *         @OA\JsonContent(
- *             @OA\Property(property="status", type="integer", example=500),
- *             @OA\Property(property="error", type="string", example="An error occurred while processing your request."),
- *             @OA\Property(property="details", type="string", example="Database connection failed")
- *         )
- *     )
- * )
- */
+     /**
+     * @OA\Get(
+     *     path="/api/employees/get",
+     *     tags={"Employees"},
+     *     summary="Get employees by name or id",
+     *     description="Retrieve a list of employees filtered by name or id. Either parameter can be provided.",
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="Filter employees by name",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="Filter employees by id",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of employees",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request"
+     *     )
+     * )
+     */
 
     public function get(Request $request)
-    {
-        if ($request->has('id')) {
-            $response = Employees::where('employee_number', $request->get('id'))->get();
-        }else if($request->has('name')){
-            $response = Employees::where('employee_name', 'like', '%' . $request->get('name') . '%')->get();
-        }else{
-            $response = DB::table('employees')->get();
-        }        
-        return response()->json([
-            'status' => 200,
-            'message' => 'Success',
-            'data' => $response,
-        ], 200);
+    {	//	\DB::enableQueryLog(); 
+        if ($request->has('param')) {
+			if(is_numeric($request->get('param'))){
+				$res = Employees::where('employee_number', $request->get('param'))->get();
+			}else{
+				$res = Employees::where('employee_name', 'like', '%' . $request->get('param') . '%')->get();
+			}            
+        }else if ($request->has('id')) {
+			$res = Employees::where('employee_id', $request->get('id'))->first();
+		}else{
+            $res = DB::table('employees')->where('status', 'A')->get();
+        }
+		// $qry = \DB::getQueryLog();
+		return response(['status' => 200, 'result' => "true", 'message' => "Success", 'data'=>$res]);
     }
 
     /**
@@ -124,7 +122,7 @@ class EmployeesController extends Controller
                 'employee_number' => 'required',
                 'employee_name' => 'required',
                 'classification' => 'required',
-                'per_diem_rate' => 'required',
+                'per_diem_rate' => 'required',				
                 'status' => 'required',
             ]);
 
@@ -133,6 +131,7 @@ class EmployeesController extends Controller
                 'employee_name' => $validated['employee_name'],
                 'classification' => $validated['classification'],
                 'per_diem_rate' => $validated['per_diem_rate'],
+				'created_by' => $request->created_by,
                 'status' => $validated['status'],
             ]);
 
@@ -240,6 +239,7 @@ class EmployeesController extends Controller
             $employee->employee_name = $request->employee_name;
             $employee->classification = $request->classification;
             $employee->per_diem_rate = $request->per_diem_rate;
+			$employee->updated_by = $request->updated_by;
             $employee->status = $request->status;
             $employee->save();
 
@@ -252,4 +252,76 @@ class EmployeesController extends Controller
         return response()->json(['message' => 'Employee not found!'], 404);
     }
 
+
+	/**
+	 * @OA\Delete(
+	 *     path="/api/employees/{id}",
+	 *     summary="Delete an employee",
+	 *     description="Marks an employee as inactive by setting their status to 'I'.",
+	 *     operationId="destroyEmployee",
+	 *     tags={"Employees"},
+	 *     @OA\Parameter(
+	 *         name="id",
+	 *         in="path",
+	 *         required=true,
+	 *         description="ID of the employee to be deleted",
+	 *         @OA\Schema(type="string")
+	 *     ),
+	 *     @OA\Response(
+	 *         response=200,
+	 *         description="Employee marked as inactive successfully",
+	 *         @OA\JsonContent(
+	 *             @OA\Property(
+	 *                 property="status",
+	 *                 type="integer",
+	 *                 example=200
+	 *             ),
+	 *             @OA\Property(
+	 *                 property="message",
+	 *                 type="string",
+	 *                 example="Employee Deleted successfully."
+	 *             )
+	 *         )
+	 *     ),
+	 *     @OA\Response(
+	 *         response=404,
+	 *         description="Employee not found",
+	 *         @OA\JsonContent(
+	 *             @OA\Property(
+	 *                 property="message",
+	 *                 type="string",
+	 *                 example="Employee not found!"
+	 *             )
+	 *         )
+	 *     )
+	 * )
+	 */
+
+    public function destroy(string $id)
+    {
+        $employee = Employees::find($id);
+
+        if ($employee) {
+            $employee->status = "I";
+            $employee->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Employee Deleted successfully.',
+            ], 200);
+        }
+
+        return response()->json(['message' => 'Employee not found!'], 404);
+    }
+
+    public function getEmpList(Request $request)
+    {	//	\DB::enableQueryLog(); 
+		$dbname = "NTACT Constructors";
+		$sqlQuery = "SELECT recnum as empid, fstnme as firstname, lstnme as lastname, midini as middleini, phnnum as phone, ctynme as city, state_ as state, zipcde as zipcode, status FROM [$dbname].[dbo].[employ]";
+
+		$employees = DB::connection('sqlsrv')->select($sqlQuery);
+		// $qry = \DB::getQueryLog();
+		return response(['status' => 200, 'result' => "true", 'message' => "Success", 'data'=>$employees]);
+    }
+	
 }

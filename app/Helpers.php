@@ -20,8 +20,8 @@ if (! function_exists('my_asset')) {
     {
 		$date = new DateTime( "NOW" );
 		$version = '?id='.$date->format( "YmdH" );
-        return app('url')->asset($path, $secure).$version;
-        //return app('url')->asset("public/".$path, $secure).$version;
+        //return app('url')->asset($path, $secure).$version;
+        return app('url')->asset("public/".$path, $secure).$version;
     }
 }
 

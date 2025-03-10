@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use App\Models\Devices;
+use App\Models\Company;
 use DB;
 use Validator;
 
@@ -48,7 +49,20 @@ class DevicesController extends Controller
  * )
  */
 
-    public function get()
+    public function get(Request $request)
+    {	//	\DB::enableQueryLog(); 
+        if ($request->has('id')) {
+			$res = Devices::where('device_id', $request->get('id'))->first();
+		}else if ($request->has('name')) {
+			$res = Devices::where('device_name', 'like', '%' . $request->get('name') . '%')->get();
+		}else{
+            $res = DB::table('devices')->where('status', 'A')->get();
+        }
+		// $qry = \DB::getQueryLog();
+		return response(['status' => 200, 'result' => "true", 'message' => "Success", 'data'=>$res]);
+    }
+	
+    /* public function get()
     {
         $response = DB::table('devices')->get();
         return response()->json([
@@ -56,7 +70,7 @@ class DevicesController extends Controller
             'message' => 'Success',
             'data' => $response,
         ], 200);
-    }
+    } */
 
     /**
  * @OA\Post(
@@ -114,7 +128,8 @@ class DevicesController extends Controller
 
             $device = Devices::create([
                 'device_name' => $validated['device_name'],
-                'device_uid' => $validated['device_uid'],
+                'device_uid' => $request->device_uid,
+                'created_by' => $request->created_by,
                 'status' => $validated['status'],
             ]);
 
@@ -217,6 +232,7 @@ class DevicesController extends Controller
             $device->device_uid = $request->device_uid;
             $device->device_name = $request->device_name;
             $device->status = $request->status;
+            $device->updated_by = $request->updated_by;
             $device->save();
 
             return response()->json([
@@ -228,4 +244,79 @@ class DevicesController extends Controller
         return response()->json(['message' => 'device not found!'], 404);
     }
 
+
+	/**
+	 * @OA\Delete(
+	 *     path="/api/devices/{id}",
+	 *     summary="Delete a device",
+	 *     description="Marks a device as inactive by setting its status to 'I'.",
+	 *     operationId="destroyDevice",
+	 *     tags={"Devices"},
+	 *     @OA\Parameter(
+	 *         name="id",
+	 *         in="path",
+	 *         required=true,
+	 *         description="ID of the device to be deleted",
+	 *         @OA\Schema(type="string")
+	 *     ),
+	 *     @OA\Response(
+	 *         response=200,
+	 *         description="Device marked as inactive successfully",
+	 *         @OA\JsonContent(
+	 *             @OA\Property(
+	 *                 property="status",
+	 *                 type="integer",
+	 *                 example=200
+	 *             ),
+	 *             @OA\Property(
+	 *                 property="message",
+	 *                 type="string",
+	 *                 example="Device Deleted successfully."
+	 *             )
+	 *         )
+	 *     ),
+	 *     @OA\Response(
+	 *         response=404,
+	 *         description="Device not found",
+	 *         @OA\JsonContent(
+	 *             @OA\Property(
+	 *                 property="message",
+	 *                 type="string",
+	 *                 example="Device not found!"
+	 *             )
+	 *         )
+	 *     )
+	 * )
+	 */
+
+    public function destroy(string $id)
+    {
+        $device = Devices::find($id);
+
+        if ($device) {
+            $device->status = "I";
+            $device->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Device Deleted successfully.',
+            ], 200);
+        }
+
+        return response()->json(['message' => 'Device not found!'], 404);
+    }
+	
+	public function getCompany(Request $request)
+    {	//	\DB::enableQueryLog(); 
+        if ($request->has('id')) {
+			$res = Company::where('id', $request->get('id'))->first();
+		}else if ($request->has('name')) {
+			$res = Company::where('name', 'like', '%' . $request->get('name') . '%')->get();
+		}else{
+            $res = DB::table('company')->where('status', 'A')->get();
+        }
+		// $qry = \DB::getQueryLog();
+		return response(['status' => 200, 'result' => "true", 'message' => "Success", 'data'=>$res]);
+    }
+	
 }

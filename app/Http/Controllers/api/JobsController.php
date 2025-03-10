@@ -51,7 +51,21 @@ class JobsController extends Controller
  *     )
  * )
  */    
-    public function get()
+ 
+     public function get(Request $request)
+    {	//	\DB::enableQueryLog(); 
+        if ($request->has('id')) {
+			$res = Jobs::where('job_id', $request->get('id'))->first();
+		}else if ($request->has('name')) {
+			$res = Jobs::where('job_name', 'like', '%' . $request->get('name') . '%')->get();
+		}else{
+            $res = DB::table('jobs')->where('status', 'A')->get();
+        }
+		// $qry = \DB::getQueryLog();
+		return response(['status' => 200, 'result' => "true", 'message' => "Success", 'data'=>$res]);
+    }
+ 
+/*     public function get()
     {
         $response = DB::table('jobs')->get();
         return response()->json([
@@ -59,7 +73,7 @@ class JobsController extends Controller
             'message' => 'Success',
             'data' => $response,
         ], 200);
-    }
+    } */
 
  /**
  * @OA\Post(
@@ -119,6 +133,7 @@ class JobsController extends Controller
 
             $job = Jobs::create([
                 'job_num' => $validated['job_num'],
+                'job_uuid' => $request->job_uuid,
                 'job_name' => $validated['job_name'],
                 'job_location' => $validated['job_location'],
                 'status' => $validated['status'],
@@ -224,6 +239,7 @@ class JobsController extends Controller
 
         if ($job) {
             $job->job_num = $request->job_num;
+            $job->job_uuid = $request->job_uuid;
             $job->job_name = $request->job_name;
             $job->job_location = $request->job_location;
             $job->status = $request->status;
@@ -238,4 +254,64 @@ class JobsController extends Controller
         return response()->json(['message' => 'Job not found!'], 404);
     }
 
+	/**
+	 * @OA\Delete(
+	 *     path="/api/jobs/{id}",
+	 *     summary="Delete a job",
+	 *     description="Marks a job as inactive by setting its status to 'I'.",
+	 *     operationId="destroyJob",
+	 *     tags={"Jobs"},
+	 *     @OA\Parameter(
+	 *         name="id",
+	 *         in="path",
+	 *         required=true,
+	 *         description="ID of the job to be deleted",
+	 *         @OA\Schema(type="string")
+	 *     ),
+	 *     @OA\Response(
+	 *         response=200,
+	 *         description="Job marked as inactive successfully",
+	 *         @OA\JsonContent(
+	 *             @OA\Property(
+	 *                 property="status",
+	 *                 type="integer",
+	 *                 example=200
+	 *             ),
+	 *             @OA\Property(
+	 *                 property="message",
+	 *                 type="string",
+	 *                 example="Job Deleted successfully."
+	 *             )
+	 *         )
+	 *     ),
+	 *     @OA\Response(
+	 *         response=404,
+	 *         description="Job not found",
+	 *         @OA\JsonContent(
+	 *             @OA\Property(
+	 *                 property="message",
+	 *                 type="string",
+	 *                 example="Job not found!"
+	 *             )
+	 *         )
+	 *     )
+	 * )
+	 */
+    public function destroy(string $id)
+    {
+        $job = Jobs::find($id);
+
+        if ($job) {
+            $job->status = "I";
+            $job->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Job Deleted successfully.',
+            ], 200);
+        }
+
+        return response()->json(['message' => 'Job not found!'], 404);
+    }
+	
 }

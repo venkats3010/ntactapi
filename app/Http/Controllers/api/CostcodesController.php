@@ -51,7 +51,20 @@ class CostcodesController extends Controller
  * )
  */
 
-    public function get()
+    public function get(Request $request)
+    {	//	\DB::enableQueryLog(); 
+        if ($request->has('id')) {
+			$res = Costcodes::where('cost_code_id', $request->get('id'))->first();
+		}else if ($request->has('name')) {
+			$res = Costcodes::where('description', 'like', '%' . $request->get('name') . '%')->get();
+		}else{
+            $res = DB::table('cost_codes')->where('status', 'A')->get();
+        }
+		// $qry = \DB::getQueryLog();
+		return response(['status' => 200, 'result' => "true", 'message' => "Success", 'data'=>$res]);
+    }
+	
+/*     public function get()
     {
         $response = DB::table('cost_codes')->get();
         return response()->json([
@@ -59,7 +72,7 @@ class CostcodesController extends Controller
             'message' => 'Success',
             'data' => $response,
         ], 200);
-    }
+    } */
 
     /**
  * @OA\Post(
@@ -236,5 +249,65 @@ class CostcodesController extends Controller
 
         return response()->json(['message' => 'Cost code not found!'], 404);
     }
+	
+	/**
+     * @OA\Delete(
+     *     path="/api/cost_codes/{id}",
+     *     summary="Delete a cost code",
+     *     description="Marks a cost code as inactive by setting its status to 'I'.",
+     *     operationId="destroyCostcode",
+     *     tags={"CostCodes"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the cost code to be deleted",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Cost code marked as inactive successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="integer",
+     *                 example=200
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Cost code Deleted successfully."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Cost code not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Cost code not found!"
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function destroy(string $id)
+    {
+        $costcode = Costcodes::find($id);
 
+        if ($costcode) {
+            $costcode->status = "I";
+            $costcode->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Cost code Deleted successfully.',
+            ], 200);
+        }
+
+        return response()->json(['message' => 'Cost code not found!'], 404);
+    }
+	
 }

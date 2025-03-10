@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Config;
 use Session;
 
-class loginController extends Controller
+class LoginController extends Controller
 {
 
     public function api_call($params, $end_point){

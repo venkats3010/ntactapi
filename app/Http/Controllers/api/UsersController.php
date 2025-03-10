@@ -52,7 +52,20 @@ class UsersController extends Controller
  * )
  */
 
-    public function get()
+    public function get(Request $request)
+    {	//	\DB::enableQueryLog(); 
+		if($request->has('id')){
+			$res = User::where('id', $request->get('id'))->first();
+		}else if($request->has('name')){
+			$res = User::where('username', 'like', '%' . $request->get('name') . '%')->get();
+        }else{
+            $res = DB::table('users')->where('status', 'A')->get();
+        }
+		// $qry = \DB::getQueryLog();
+		return response(['status' => 200, 'result' => "true", 'message' => "Success", 'data'=>$res]);
+    }
+	
+   /*  public function get()
     {
         $response = DB::table('users')->get();
         return response()->json([
@@ -60,7 +73,7 @@ class UsersController extends Controller
             'message' => 'Success',
             'data' => $response,
         ], 200);
-    }
+    } */
 
 /**
  * @OA\Post(
@@ -126,11 +139,13 @@ class UsersController extends Controller
                 'username' => 'required',
                 'status' => 'required',
             ]);
-
+			$mpin = !isset($request->mpin) || $request->mpin == "" ? '1234' : $request->mpin;
             $user = User::create([
                 'firstname' => $validated['firstname'],
                 'lastname' => $validated['lastname'],
                 'username' => $validated['username'],
+                'password' => password_hash($request->password, PASSWORD_BCRYPT),
+                'mpin' => password_hash($mpin, PASSWORD_BCRYPT),
                 'gender' => $request->gender,
                 'countrycode' => $request->countrycode,
                 'phone' => $request->phone,
@@ -175,7 +190,6 @@ class UsersController extends Controller
  *         in="path",
  *         required=true,
  *         description="User ID to be updated",
- *         @OA\Schema(type="integer", example=1)
  *     ),
  *     @OA\RequestBody(
  *         required=true,
@@ -249,7 +263,13 @@ class UsersController extends Controller
         if ($user) {
             $user->firstname = $request->firstname;
             $user->lastname = $request->lastname;
-            $user->username = $request->username;
+            //$user->username = $request->username;
+			if($request->password){
+				$user->password = password_hash($request->password, PASSWORD_BCRYPT);
+			}
+			if($request->mpin){
+				$user->mpin = password_hash($request->mpin, PASSWORD_BCRYPT);
+			}
             $user->gender = $request->gender;
             $user->countrycode = $request->countrycode;
             $user->phone = $request->phone;
@@ -269,4 +289,104 @@ class UsersController extends Controller
         return response()->json(['message' => 'user not found!'], 404);
     }
 
+ /**
+     * @OA\Put(
+     *     path="/users/{id}/changepassword",
+     *     summary="Change the user's password",
+     *     description="Allows a user to change their password.",
+     *     operationId="changePassword",
+     *     tags={"Users"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the user to update the password for"
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Password change request body",
+     *         @OA\JsonContent(
+     *                 type="object",
+     *                 required={"currentpassword", "newpassword", "confirmpassword"},
+     *                 @OA\Property(property="currentpassword", type="string", description="Current password of the user", example="oldPassword123"),
+     *                 @OA\Property(property="newpassword", type="string", description="New password to be set", example="newPassword456"),
+     *                 @OA\Property(property="confirmpassword", type="string", description="Confirmation of the new password", example="newPassword456")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Password updated successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=200),
+     *             @OA\Property(property="message", type="string", example="Password updated successfully.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation error - required fields not provided or mismatched",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="errors", type="object", example={
+	 *					@OA\Property(property="currentpassword", type="string", example="The current password field is required."),
+     *                 @OA\Property(property="newpassword", type="string", example="The new password field is required."),
+     *                @OA\Property(property="confirmpassword", type="string", example="The confirm password field is required.")
+     *             })
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="User not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="user not found!")
+     *         )
+     *     )
+     * )
+     */
+    public function changepassword(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'currentpassword' => 'required',
+            'newpassword' => 'required',
+            'confirmpassword' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+        if ($request->newpassword != $request->confirmpassword) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $user = User::find($id);
+
+        if ($user) {
+			$user->password = password_hash($request->newpassword, PASSWORD_BCRYPT);
+            $user->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Password updated successfully.',
+            ], 200);
+        }
+
+        return response()->json(['message' => 'user not found!'], 404);
+    }
+	
+	public function destroy($id)
+	{
+		$res = User::find($id);
+		if ($res) {
+			$res->status = 'I';
+			$res->save();
+
+			return response()->json([
+				'status' => 200,
+				'message' => 'Delete successfully.',
+			], 200);
+		}
+
+		return response()->json([
+			'message' => 'Resource not found.',
+		], 404);
+	}
+	
 }

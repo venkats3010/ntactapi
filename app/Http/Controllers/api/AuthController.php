@@ -19,6 +19,104 @@ class AuthController extends Controller
         echo "venkat";
     }
 
+
+
+/**
+ * @OA\Post(
+ *     path="/api/auth/login",
+ *     summary="User Login",
+ *     description="Login to the application using username and password",
+ *     operationId="login",
+ *     tags={"Auth"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         description="Login credentials",
+ *         @OA\JsonContent(
+ *             required={"username", "password"},
+ *             @OA\Property(property="username", type="string", example="john_doe"),
+ *             @OA\Property(property="password", type="string", format="password", example="password123")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="User authentication successful",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=200),
+ *             @OA\Property(property="result", type="string", example="true"),
+ *             @OA\Property(property="message", type="string", example="user authentication successful"),
+ *             @OA\Property(property="auth", type="integer", example=1),
+ *             @OA\Property(property="access_token", type="string", example="your_access_token_here"),
+ *             @OA\Property(property="data", type="object", additionalProperties=true)
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Validation error",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=422),
+ *             @OA\Property(property="error", type="object", additionalProperties=true)
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=201,
+ *         description="Incorrect username or password",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=201),
+ *             @OA\Property(property="error", type="string", example="Enter correct username/password")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Server error",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="error", type="string", example="An error occurred")
+ *         )
+ *     )
+ * )
+ */
+
+    public function login(Request $request)
+    { 
+        //echo $username = $request->input('username');
+        //print_r($request->get('username'));exit;
+        $validator = Validator::make($request->all(), [ 
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+        if ($validator->fails()) { 
+             return response()->json(['status' => 422, 'error'=>$validator->errors()], 422);            
+        }
+
+        $dataList = [];
+        try {
+       // DB::enableQueryLog();
+        $getUser = DB::table('users')->where('username', $request->get('username'))->first();
+        //$getUser = DB::select('select * from users where username = ?', [$request->get('username')]);
+        // print_r($getUser[0]->password); exit;
+        // dd(DB::getQueryLog());exit;
+        if ($getUser && Hash::check($request->get('password'), $getUser->password)) {
+            $userModel = \App\Models\User::find($getUser->id);
+            if ($userModel) {
+                $accessToken = $userModel->createToken('authToken')->plainTextToken;               
+                Log::channel('auth')->info('testAPI-- ' . json_encode($getUser));
+                if ($getUser) {
+                    return response(['status' => 200, 'result' => "true", 'message' => "user authentication successful", 'auth' => 1, 'access_token' => $accessToken, 'data'=>$getUser]);
+                }else{
+                    return json_encode($getUser);          
+                }
+            } else {
+                return response(['status' => 201, 'error' => 'User not found'], 201);
+            }           
+          } else {
+            return response(['status' => 201,'error' => 'Enter correct username/password'], 201); 
+          }
+        } catch (\Exception $e) {
+             // Handle any other exceptions
+            echo "An error occurred: " . $e->getMessage();
+        }
+    }
+	
+	
     public function validatePhone(Request $request)
     { 
         $validator = Validator::make($request->all(), [ 
@@ -62,7 +160,7 @@ class AuthController extends Controller
                     $accessToken = $userModel->createToken('authToken')->plainTextToken;               
                     Log::channel('auth')->info('testAPI-- ' . json_encode($getUser));
                     if ($getUser) {
-                        return response(['status' => 200, 'result' => "true", 'message' => "user authentication successful", 'auth' => 1, 'access_token' => $accessToken, 'data'=>$getUser]);
+                        return response(['status' => 200, 'result' => "true", 'message' => "user authentication successful", 'auth' => "field", 'access_token' => $accessToken, 'data'=>$getUser]);
                     }else{
                         return json_encode($getUser);          
                     }
@@ -78,104 +176,5 @@ class AuthController extends Controller
              }
 
     }
-
-    /**
-     * @OA\POST(
-     *     path="/api/auth/login",
-     *     tags={"Auth"},
-     *     summary="User Login",
-     *     description="Enter the username and password",
-     *     operationId="login",
-     *     @OA\Parameter(
-     *         name="username",
-     *         in="query",
-     *         description="username",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *           
-     *         )
-     *     ),
-     *      @OA\Parameter(
-     *         name="password",
-     *         in="query",
-     *         description="password",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *             
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="successful operation",
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid status value"
-     *     ),
-     *     security={
-     *         {"bearerAuth": {}}
-     *     }
-     * )
-     */
-
-    public function login(Request $request)
-    { 
-        //echo $username = $request->input('username');
-        //print_r($request->get('username'));exit;
-        $validator = Validator::make($request->all(), [ 
-            'username' => 'required',
-            'password' => 'required',
-        ]);
-        if ($validator->fails()) { 
-             return response()->json(['status' => 422, 'error'=>$validator->errors()], 422);            
-        }
-
-//         try {
-//             $getUser = DB::select('select * from users where username = ?', [$request->get('username')]);
-        
-//             if ($getUser) {
-//                 // Query was successful and returned data
-//                 echo "User found!";
-//             } else {
-//                 // No user found
-//                 echo "User not found!";
-//             }
-//         } catch (\Illuminate\Database\QueryException $e) {
-//             // Handle query exceptions (e.g., invalid query, connection errors)
-//             echo "Database query failed: " . $e->getMessage();
-//         } catch (\Exception $e) {
-//             // Handle any other exceptions
-//             echo "An error occurred: " . $e->getMessage();
-//         }
-// exit;        
-        $dataList = [];
-        try {
-       // DB::enableQueryLog();
-        $getUser = DB::table('users')->where('username', $request->get('username'))->first();
-        //$getUser = DB::select('select * from users where username = ?', [$request->get('username')]);
-        // print_r($getUser[0]->password); exit;
-        // dd(DB::getQueryLog());exit;
-        if ($getUser && Hash::check($request->get('password'), $getUser->password)) {
-            $userModel = \App\Models\User::find($getUser->id);
-            if ($userModel) {
-                $accessToken = $userModel->createToken('authToken')->plainTextToken;               
-                Log::channel('auth')->info('testAPI-- ' . json_encode($getUser));
-                if ($getUser) {
-                    return response(['status' => 200, 'result' => "true", 'message' => "user authentication successful", 'auth' => 1, 'access_token' => $accessToken, 'data'=>$getUser]);
-                }else{
-                    return json_encode($getUser);          
-                }
-            } else {
-                return response(['status' => 201, 'error' => 'User not found'], 201);
-            }           
-          } else {
-            return response(['status' => 201,'error' => 'Enter correct username/password'], 201); 
-          }
-        } catch (\Exception $e) {
-             // Handle any other exceptions
-            echo "An error occurred: " . $e->getMessage();
-        }
-    }
+	
 }
